@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public delegate void DelegateFire(int nbBullet);
+    public event DelegateFire OnFire;
+
     [SerializeField]
     private Grid grid = null;
     [SerializeField]
@@ -110,6 +113,8 @@ public class PlayerController : MonoBehaviour
     {
         if (numberBullets > 0 && timerFireRate <= 0.0f)
         {
+            if (OnFire != null)
+                OnFire(numberBullets);
             numberBullets--;
             timerBullet = 0.0f;
             startTimer = true;
