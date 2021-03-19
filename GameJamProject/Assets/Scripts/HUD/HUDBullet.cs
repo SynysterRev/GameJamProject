@@ -26,6 +26,6 @@ public class HUDBullet : MonoBehaviour
     private void UpdateBullet(int nbBullet)
     {
         this.nbBullet.text = nbBullet.ToString();
-        //imgBullet.
+        imgBullet.fillAmount = nbBullet / 7.0f;
     }
 }
