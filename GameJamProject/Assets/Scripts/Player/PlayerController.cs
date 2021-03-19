@@ -113,9 +113,9 @@ public class PlayerController : MonoBehaviour
     {
         if (numberBullets > 0 && timerFireRate <= 0.0f)
         {
+            numberBullets--;
             if (OnFire != null)
                 OnFire(numberBullets);
-            numberBullets--;
             timerBullet = 0.0f;
             startTimer = true;
             GameObject bullet = Instantiate(prefabBullet, transform.position, Quaternion.identity);
