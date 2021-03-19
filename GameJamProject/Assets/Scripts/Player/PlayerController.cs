@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public delegate void DelegateFire(int nbBullet);
     public event DelegateFire OnFire;
+    public delegate void DelegateReload(int nbBullet);
+    public event DelegateReload OnReloading;
 
     [SerializeField]
     private Grid grid = null;
@@ -144,6 +146,8 @@ public class PlayerController : MonoBehaviour
         do
         {
             numberBullets++;
+            if (OnReloading != null)
+                OnReloading(numberBullets);
             yield return new WaitForSeconds(timerBetweenReload);
         } while (numberBullets < numberMaxBullets);
     }

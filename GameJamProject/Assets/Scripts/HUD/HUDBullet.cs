@@ -15,6 +15,7 @@ public class HUDBullet : MonoBehaviour
     {
         player = FindObjectOfType<PlayerController>();
         player.OnFire += UpdateBullet;
+        player.OnReloading += UpdateBullet;
     }
 
     // Update is called once per frame
