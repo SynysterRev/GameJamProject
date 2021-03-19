@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public delegate void DelegateFire(int nbBullet);
+    public event DelegateFire OnFire;
+    public delegate void DelegateReload(int nbBullet);
+    public event DelegateReload OnReloading;
+
     [SerializeField]
     private Grid grid = null;
     [SerializeField]
@@ -111,6 +116,8 @@ public class PlayerController : MonoBehaviour
         if (numberBullets > 0 && timerFireRate <= 0.0f)
         {
             numberBullets--;
+            if (OnFire != null)
+                OnFire(numberBullets);
             timerBullet = 0.0f;
             startTimer = true;
             GameObject bullet = Instantiate(prefabBullet, transform.position, Quaternion.identity);
@@ -139,6 +146,8 @@ public class PlayerController : MonoBehaviour
         do
         {
             numberBullets++;
+            if (OnReloading != null)
+                OnReloading(numberBullets);
             yield return new WaitForSeconds(timerBetweenReload);
         } while (numberBullets < numberMaxBullets);
     }
