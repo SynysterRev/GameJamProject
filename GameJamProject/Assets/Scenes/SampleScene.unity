@@ -359,6 +359,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8495610372128694467, guid: ed617a8504acbdc42a47505617d98f17, type: 3}
+      propertyPath: m_UpscaleRT
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495610372128694467, guid: ed617a8504acbdc42a47505617d98f17, type: 3}
+      propertyPath: m_CropFrameX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495610372128694467, guid: ed617a8504acbdc42a47505617d98f17, type: 3}
+      propertyPath: m_CropFrameY
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8495610372128694471, guid: ed617a8504acbdc42a47505617d98f17, type: 3}
       propertyPath: m_Name
       value: Main Camera
