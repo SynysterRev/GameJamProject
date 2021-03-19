@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
     {
         InputMovement();
         Move();
+        InputFire();
+        ReloadBullet();
     }
     private void InputMovement()
     {
@@ -124,7 +126,7 @@ public class PlayerController : MonoBehaviour
             timerBullet += Time.deltaTime;
             if (timerBullet >= timerBeforeReload)
             {
-
+                StartCoroutine(Reload());
             }
         }
     }
