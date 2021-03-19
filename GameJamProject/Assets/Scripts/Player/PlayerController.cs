@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private int numberBullets = 7;
     private float timerBullet = 0.0f;
     private bool startTimer = false;
+    private bool isReloading = false;
     //movement
     private float lerp = 0.0f;
     private int currentGrid = 0;
@@ -100,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
     private void InputFire()
     {
-        if (move) return;
+        if (move || isReloading) return;
         if (timerFireRate > 0.0f)
             timerFireRate -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -147,6 +148,7 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator Reload()
     {
+        isReloading = true;
         do
         {
             numberBullets++;
@@ -154,5 +156,6 @@ public class PlayerController : MonoBehaviour
                 OnReloading(numberBullets);
             yield return new WaitForSeconds(timerBetweenReload);
         } while (numberBullets < numberMaxBullets);
+        isReloading = false;
     }
 }

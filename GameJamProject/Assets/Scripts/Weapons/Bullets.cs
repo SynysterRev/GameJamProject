@@ -12,16 +12,18 @@ public class Bullets : MonoBehaviour
     [SerializeField]
     private float speed = 1.0f;
     private BulletType bulletType = BulletType.blue;
+
+    public BulletType TypeBullet { get => bulletType; }
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void LaunchProjectile(BulletType bulletType)
