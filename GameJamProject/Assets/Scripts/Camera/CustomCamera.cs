@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class CustomCamera : MonoBehaviour
 {
+    [Header("Movement")]
+    [SerializeField]
+    private Transform target = null;
+    [SerializeField]
+    private float speed = 0.1f;
+
     [Header("Shakiness Effect")]
     [SerializeField]
     protected float shakinessPos = 0.14f;
@@ -14,8 +20,28 @@ public class CustomCamera : MonoBehaviour
     private Vector2 direction = Vector2.zero;
     private float rotationZ = 0.0f;
     private bool isShaking = false;
-
+    private Vector3 startPos = Vector2.zero;
     public Vector2 Direction { get => direction; set => direction = value; }
+
+    private void Start()
+    {
+        startPos = transform.position;
+    }
+    void FixedUpdate()
+    {
+        Follow(target);
+    }
+
+    public void Follow(Transform _Target)
+    {
+        if (_Target)
+        {
+
+            transform.position = Vector3.Lerp(transform.position, startPos, speed);
+            rotationZ = Mathf.Lerp(rotationZ, 0.0f, speed);
+            transform.eulerAngles = new Vector3(0.0f, 0.0f, rotationZ);
+        }
+    }
 
     public void Shake(float _positionFactor, float _rotationFactor, float _time)
     {
