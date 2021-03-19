@@ -1737,7 +1737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 1479837568}
   speed: 10
-  prefabBullet: {fileID: 0}
+  prefabBullet: {fileID: 8405986005043459447, guid: 83ecd67873736434e9455ef5c8b7123d, type: 3}
   numberMaxBullets: 7
   timerBeforeReload: 3
   timerBetweenReload: 0.2
