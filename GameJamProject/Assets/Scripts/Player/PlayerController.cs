@@ -128,4 +128,12 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    private IEnumerator Reload()
+    {
+        do
+        {
+            numberBullets++;
+            yield return new WaitForSeconds(timerBetweenReload);
+        } while (numberBullets < numberMaxBullets);
+    }
 }
