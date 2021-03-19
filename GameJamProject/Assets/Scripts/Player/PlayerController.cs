@@ -2,11 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BulletType
-{
-    red,
-    blue
-}
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
@@ -22,6 +17,9 @@ public class PlayerController : MonoBehaviour
     private float timerBeforeReload = 3.0f;
     [SerializeField]
     private float timerBetweenReload = 0.2f;
+    [SerializeField]
+    private float fireRate = 0.5f;
+    private float timerFireRate = 0.0f;
     private int numberBullets = 7;
     private float timerBullet = 0.0f;
     private bool startTimer = false;
@@ -96,6 +94,8 @@ public class PlayerController : MonoBehaviour
     private void InputFire()
     {
         if (move) return;
+        if (timerFireRate > 0.0f)
+            timerFireRate -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             Fire(BulletType.blue);
@@ -108,15 +108,18 @@ public class PlayerController : MonoBehaviour
 
     private void Fire(BulletType bulletType)
     {
-        if (numberBullets > 0)
+        if (numberBullets > 0 && timerFireRate <= 0.0f)
         {
             numberBullets--;
             timerBullet = 0.0f;
             startTimer = true;
+            GameObject bullet = Instantiate(prefabBullet, transform.position, Quaternion.identity);
+            bullet.GetComponent<Bullets>().LaunchProjectile(bulletType);
+            timerFireRate = fireRate;
         }
         else
         {
-
+            //jouer un son
         }
     }
     private void ReloadBullet()
@@ -126,6 +129,7 @@ public class PlayerController : MonoBehaviour
             timerBullet += Time.deltaTime;
             if (timerBullet >= timerBeforeReload)
             {
+                startTimer = false;
                 StartCoroutine(Reload());
             }
         }
