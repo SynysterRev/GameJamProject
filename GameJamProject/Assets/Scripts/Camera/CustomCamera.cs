@@ -63,7 +63,7 @@ public class CustomCamera : MonoBehaviour
         {
             Vector3 newPos = transform.position;
             newPos.x += Random.Range(-_positionFactor, _positionFactor);
-            newPos.y += Random.Range(-_positionFactor, _positionFactor);
+           // newPos.y += Random.Range(-_positionFactor, _positionFactor);
 
             rotationZ += Random.Range(-_rotationFactor, _rotationFactor);
             //move with random position
