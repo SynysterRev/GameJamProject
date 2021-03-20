@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     public delegate void DelegateDeath();
     public event DelegateDeath OnDeath;
+    public delegate void DelegateTypeBullet(BulletType type);
+    public event DelegateTypeBullet OnChangeType;
 
     [SerializeField]
     private float speed = 10.0f;
@@ -45,7 +47,8 @@ public class Enemy : MonoBehaviour
                 orderDamage[i] = BulletType.red;
             }
         }
-
+        if (OnChangeType != null)
+            OnChangeType(orderDamage[currentOrderDmg]);
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.up * speed * gm.CustomDT;
     }
@@ -65,6 +68,11 @@ public class Enemy : MonoBehaviour
                     if (OnDeath != null)
                         OnDeath();
                     Destroy(gameObject);
+                }
+                else
+                {
+                    if (OnChangeType != null)
+                        OnChangeType(orderDamage[currentOrderDmg]);
                 }
             }
         }
