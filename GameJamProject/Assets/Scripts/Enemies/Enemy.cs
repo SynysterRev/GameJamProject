@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public delegate void DelegateDeath();
+    public event DelegateDeath OnDeath;
+
     [SerializeField]
     private float speed = 10.0f;
     [SerializeField]
@@ -59,6 +62,8 @@ public class Enemy : MonoBehaviour
                 {
                     //anim mort
                     rb.velocity = Vector2.zero;
+                    if (OnDeath != null)
+                        OnDeath();
                     Destroy(gameObject);
                 }
             }

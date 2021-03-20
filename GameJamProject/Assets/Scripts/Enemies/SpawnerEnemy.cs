@@ -6,25 +6,44 @@ using System;
 
 public class SpawnerEnemy : MonoBehaviour
 {
+    //Spawn
     [SerializeField]
     private GameObject prefabEnemy = null;
     private Spawn[] sp;
     private int nbCell = 9;
     private int currentWave = 0;
     private int wave = 0;
+    private float timerSpawn = 0.0f;
     private bool canSpawn = true;
+    private GameManager gm = null;
+    //waves
+    private bool waitNewWave = false;
+    private bool startTimerWave = false;
+    private float timerBetweenWave = 5.0f;
+    private int enemiesLeft = 0;
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameManager.Instance;
         LoadData();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(canSpawn)
+        if (canSpawn)
         {
             TrySpawn();
+        }
+        else if (startTimerWave)
+        {
+            timerBetweenWave -= Time.deltaTime * gm.CustomDT;
+            if (timerBetweenWave <= 0.0f)
+            {
+                startTimerWave = false;
+                canSpawn = true;
+                timerSpawn = 0.0f;
+            }
         }
     }
 
@@ -36,18 +55,62 @@ public class SpawnerEnemy : MonoBehaviour
     }
     private void TrySpawn()
     {
-        for (int i = 0; i < 4; ++i)
+        if (timerSpawn <= 0.0f)
         {
-            int indexWave = (wave + 1) * 4 - 4 + i;
-            int indexEnemy = sp[currentWave].waves[indexWave];
-            if (indexEnemy != -1)
+            //spawn one line at the time
+            timerSpawn = sp[currentWave].timerBetweenEachSpawn;
+            enemiesLeft += sp[currentWave].sizeWave;
+            for (int i = 0; i < 4; ++i)
             {
-                GameObject go = Instantiate(prefabEnemy, new Vector2(-1.5f + i, nbCell * Vector2.down.y), Quaternion.identity);
-                go.GetComponent<Enemy>().LoadData(indexEnemy);
+                int indexWave = (wave + 1) * 4 - 4 + i;
+                int indexEnemy = sp[currentWave].waves[indexWave];
+                if (indexEnemy != -1)
+                {
+                    GameObject go = Instantiate(prefabEnemy, new Vector2(-1.5f + i, nbCell * Vector2.down.y), Quaternion.identity);
+                    Enemy enemy = go.GetComponent<Enemy>();
+                    enemy.LoadData(indexEnemy);
+                    enemy.OnDeath += UpdateEnemiesLeft;
+                }
+            }
+            //next line
+            wave++;
+            //last line spawn then next wave
+            if (wave == sp[currentWave].sizeWave)
+            {
+                currentWave++;
+                wave = 0;
+                canSpawn = false;
+                //wave over then level completed
+                if (currentWave == sp.Length)
+                {
+                    //end level
+                }
+                else if (enemiesLeft == 0)
+                {
+                    timerBetweenWave = 5.0f;
+                    startTimerWave = true;
+                }
+                else
+                {
+                    waitNewWave = true;
+                }
             }
         }
-        wave++;
-        canSpawn = false;
+        else
+        {
+            timerSpawn -= Time.deltaTime * gm.CustomDT;
+        }
+    }
+
+    private void UpdateEnemiesLeft()
+    {
+        enemiesLeft--;
+        if (enemiesLeft == 0 & waitNewWave)
+        {
+            waitNewWave = false;
+            timerBetweenWave = 5.0f;
+            startTimerWave = true;
+        }
     }
 
     public void StartSpawner()
