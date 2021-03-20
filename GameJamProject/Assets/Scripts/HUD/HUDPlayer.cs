@@ -15,10 +15,16 @@ public class HUDPlayer : MonoBehaviour
     private Text nbLife = null;
     [SerializeField]
     private Image imgLife = null;
+    [Header("Score")]
+    [SerializeField]
+    private Text score = null;
     private PlayerController player = null;
+    private GameManager gm = null;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        gm = GameManager.Instance;
+        gm.OnUpdateScore += UpdateScore;
         player = FindObjectOfType<PlayerController>();
         player.OnFire += UpdateBullet;
         player.OnReloading += UpdateBullet;
@@ -41,5 +47,10 @@ public class HUDPlayer : MonoBehaviour
     {
         nbLife.text = life.ToString() + " / " + maxLife.ToString();
         imgLife.fillAmount = life / (float)maxLife;
+    }
+
+    private void UpdateScore(int score)
+    {
+        this.score.text = score.ToString();
     }
 }
