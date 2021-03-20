@@ -147,11 +147,11 @@ public class PlayerController : MonoBehaviour
             timerFireRate -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Fire(BulletType.blue);
+            Fire(BulletType.rightType);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            Fire(BulletType.red);
+            Fire(BulletType.leftType);
         }
     }
 
@@ -168,7 +168,9 @@ public class PlayerController : MonoBehaviour
             startTimer = true;
 
             GameObject bullet = poolManager.Get(prefabBullet, transform.position, Quaternion.identity);
-            bullet.GetComponent<Bullets>().LaunchProjectile(bulletType);
+            Bullets bul = bullet.GetComponent<Bullets>();
+            bul.LaunchProjectile(bulletType);
+            bul.OnTouchEnemy += ReloadOneBullet;
             timerFireRate = fireRate;
 
             anim.SetTrigger("fire");
@@ -195,7 +197,22 @@ public class PlayerController : MonoBehaviour
             if (timerBullet >= timerBeforeReload)
             {
                 startTimer = false;
-                StartCoroutine(Reload());
+                if (numberBullets < numberMaxBullets)
+                    StartCoroutine(Reload());
+            }
+        }
+    }
+    private void ReloadOneBullet()
+    {
+        if (numberBullets < numberMaxBullets)
+        {
+            numberBullets++;
+            if (OnReloading != null)
+                OnReloading(numberBullets);
+            if (numberBullets == numberMaxBullets)
+            {
+                startTimer = false;
+                timerBullet = 0.0f;
             }
         }
     }
@@ -216,7 +233,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.GetComponent<Enemy>())
         {
-            life = Mathf.Clamp(life--, 0, maxLife);
+            life = Mathf.Clamp(--life, 0, maxLife);
             if (OnHit != null)
                 OnHit(life, maxLife);
         }
