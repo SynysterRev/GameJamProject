@@ -1,13 +1,9 @@
 {"Items" : [
 	{
 		"idWave" : 0,
-		"sizeWave" : 5,
+		"sizeWave" : 1,
 		"timerBetweenEachSpawn" : 3.0,
-		"waves" : [-1,-1,4,-1,
-		0,-1,-1,-1,
-		1,0,-1,-1,
-		-1,1,1,1,
-		0,-1,-1,1]
+		"waves" : [-1,-1,4,-1]
 	},
 	{
 		"idWave" : 1,
