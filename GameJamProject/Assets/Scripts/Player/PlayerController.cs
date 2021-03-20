@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     private float fireRate = 0.5f;
     [SerializeField]
     private GameObject dustPrefab = null;
+    [SerializeField]
+    private GameObject firePrefab = null;
     private float timerFireRate = 0.0f;
     private int numberBullets = 7;
     private float timerBullet = 0.0f;
@@ -80,7 +82,7 @@ public class PlayerController : MonoBehaviour
             lerp = 0.0f;
             nextIndex = 0;
             move = true;
-            ChangeAnim();
+            ChangeAnimDirection();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && currentGrid != 1)
         {
@@ -89,7 +91,7 @@ public class PlayerController : MonoBehaviour
             lerp = 0.0f;
             nextIndex = 1;
             move = true;
-            ChangeAnim();
+            ChangeAnimDirection();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && currentGrid != 2)
         {
@@ -98,7 +100,7 @@ public class PlayerController : MonoBehaviour
             lerp = 0.0f;
             nextIndex = 2;
             move = true;
-            ChangeAnim();
+            ChangeAnimDirection();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4) && currentGrid != 3)
         {
@@ -107,11 +109,11 @@ public class PlayerController : MonoBehaviour
             lerp = 0.0f;
             nextIndex = 3;
             move = true;
-            ChangeAnim();
+            ChangeAnimDirection();
         }
     }
 
-    private void ChangeAnim()
+    private void ChangeAnimDirection()
     {
         if (currentGrid < nextIndex)
         {
@@ -164,15 +166,27 @@ public class PlayerController : MonoBehaviour
                 OnFire(numberBullets);
             timerBullet = 0.0f;
             startTimer = true;
+
             GameObject bullet = poolManager.Get(prefabBullet, transform.position, Quaternion.identity);
             bullet.GetComponent<Bullets>().LaunchProjectile(bulletType);
             timerFireRate = fireRate;
+
+            anim.SetTrigger("fire");
+            GameObject.Instantiate(firePrefab, transform.position - new Vector3(0.0f, 0.3f, 0.0f), Quaternion.identity, transform);
+            StartCoroutine(ChangeTo("idle", 0.5f));
         }
         else
         {
             //jouer un son
         }
     }
+
+    private IEnumerator ChangeTo(string _name, float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        anim.SetTrigger(_name);
+    }
+
     private void ReloadBullet()
     {
         if (startTimer)
