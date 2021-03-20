@@ -390,6 +390,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 706491331, guid: ed617a8504acbdc42a47505617d98f17, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 706491331, guid: ed617a8504acbdc42a47505617d98f17, type: 3}
       propertyPath: screenColor.b
       value: 0.21398288
       objectReference: {fileID: 0}
