@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     private float timerBetweenReload = 0.2f;
     [SerializeField]
     private float fireRate = 0.5f;
+    [SerializeField]
+    private GameObject dustPrefab = null;
     private float timerFireRate = 0.0f;
     private int numberBullets = 7;
     private float timerBullet = 0.0f;
@@ -46,9 +48,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 posBeforeMov = Vector2.zero;
     private ShakeEffect shakeEffect = null;
     private Number[] numbers = null;
+    private Animator anim = null;
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         poolManager = PoolManager.Instance;
         numbers = GameObject.FindObjectsOfType<Number>();
         shakeEffect = GameObject.FindObjectOfType<ShakeEffect>();
@@ -76,6 +80,7 @@ public class PlayerController : MonoBehaviour
             lerp = 0.0f;
             nextIndex = 0;
             move = true;
+            ChangeAnim();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && currentGrid != 1)
         {
@@ -84,6 +89,7 @@ public class PlayerController : MonoBehaviour
             lerp = 0.0f;
             nextIndex = 1;
             move = true;
+            ChangeAnim();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && currentGrid != 2)
         {
@@ -92,6 +98,7 @@ public class PlayerController : MonoBehaviour
             lerp = 0.0f;
             nextIndex = 2;
             move = true;
+            ChangeAnim();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4) && currentGrid != 3)
         {
@@ -100,6 +107,22 @@ public class PlayerController : MonoBehaviour
             lerp = 0.0f;
             nextIndex = 3;
             move = true;
+            ChangeAnim();
+        }
+    }
+
+    private void ChangeAnim()
+    {
+        if (currentGrid < nextIndex)
+        {
+            anim.SetTrigger("right");
+            GameObject go = GameObject.Instantiate(dustPrefab, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            anim.SetTrigger("left");
+            GameObject go = GameObject.Instantiate(dustPrefab, transform.position, Quaternion.identity);
+            go.transform.localScale = new Vector2(-1.0f, 1.0f);
         }
     }
     private void Move()
@@ -111,6 +134,7 @@ public class PlayerController : MonoBehaviour
         {
             currentGrid = nextIndex;
             move = false;
+            anim.SetTrigger("idle");
         }
     }
 
