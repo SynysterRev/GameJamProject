@@ -58,8 +58,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -546400827
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &3916492638144692604
 MonoBehaviour:
@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   indexTypeEnemy: 2
+  firePrefab: {fileID: 1415968711570431900, guid: 831f2f03d58d87943b045dfb5f9579b0, type: 3}
 --- !u!114 &-450267268741639025
 MonoBehaviour:
   m_ObjectHideFlags: 0

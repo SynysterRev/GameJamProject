@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     private float speed = 10.0f;
     [SerializeField]
     private int indexTypeEnemy = 0;
+    [SerializeField]
+    private GameObject firePrefab = null;
     private BulletType[] orderDamage = null;
     private Rigidbody2D rb = null;
     private int currentOrderDmg = 0;
@@ -55,12 +57,20 @@ public class Enemy : MonoBehaviour
         PlayerController player = collision.GetComponent<PlayerController>();
         if (bullet)
         {
+            GameObject go = GameObject.Instantiate(firePrefab, bullet.transform.position, Quaternion.identity);
+            go.transform.localScale *= 0.5f;
+            
             if (bullet.TypeBullet == orderDamage[currentOrderDmg])
             {
+
                 bullet.CorrectBullet();
                 currentOrderDmg++;
+
+
+
                 if (currentOrderDmg >= orderDamage.Length)
                 {
+
                     //anim mort
                     rb.velocity = Vector2.zero;
                     if (OnDeath != null)
