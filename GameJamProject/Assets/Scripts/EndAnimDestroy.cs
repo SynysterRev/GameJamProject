@@ -11,9 +11,15 @@ public class EndAnimDestroy : MonoBehaviour
     private void Start()
     {
         if (prefabParticle)
-            GameObject.Instantiate(prefabParticle, transform.position, Quaternion.identity);
+        {
+            GameObject go = GameObject.Instantiate(prefabParticle, transform.position, Quaternion.identity);
+        }
+
         if (prefabWave)
-            GameObject.Instantiate(prefabWave, transform.position, Quaternion.identity);
+        {
+            GameObject go = GameObject.Instantiate(prefabWave, transform.position, Quaternion.identity);
+        }
+
     }
     public void DestroyObject()
     {

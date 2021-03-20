@@ -128,7 +128,7 @@ Shader "Hidden/Retro Screen Effect"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 distortion = tex2D(_Distortion, i.uv);
-                fixed4 col = tex2D(_MainTex, i.uv.xy+distortion.xy*0.05f);
+                fixed4 col = tex2D(_MainTex, i.uv.xy+distortion.xy*0.03f);
                 return col;
             }
             ENDCG
