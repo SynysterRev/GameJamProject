@@ -37,9 +37,11 @@ public class PlayerController : MonoBehaviour
     private Vector2[] posGrid = new Vector2[4];
     private Vector2 posBeforeMov = Vector2.zero;
     private CustomCamera cam = null;
+    private Number[] numbers = null;
     // Start is called before the first frame update
     void Start()
     {
+        numbers = GameObject.FindObjectsOfType<Number>();
         cam = GameObject.FindObjectOfType<CustomCamera>();
         posGrid[0] = transform.position;
         for (int i = 1; i < posGrid.Length; ++i)
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && currentGrid != 0)
         {
+            numbers[3].StartAnimation();
             posBeforeMov = transform.position;
             lerp = 0.0f;
             nextIndex = 0;
@@ -67,6 +70,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && currentGrid != 1)
         {
+            numbers[2].StartAnimation();
             posBeforeMov = transform.position;
             lerp = 0.0f;
             nextIndex = 1;
@@ -74,6 +78,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && currentGrid != 2)
         {
+            numbers[1].StartAnimation();
             posBeforeMov = transform.position;
             lerp = 0.0f;
             nextIndex = 2;
@@ -81,6 +86,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4) && currentGrid != 3)
         {
+            numbers[0].StartAnimation();
             posBeforeMov = transform.position;
             lerp = 0.0f;
             nextIndex = 3;
@@ -119,7 +125,7 @@ public class PlayerController : MonoBehaviour
         if (numberBullets > 0 && timerFireRate <= 0.0f)
         {
             cam.Shake();
-            
+
             numberBullets--;
             if (OnFire != null)
                 OnFire(numberBullets);
