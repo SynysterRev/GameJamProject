@@ -21,6 +21,9 @@ public class CollisionOutside : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<Enemy>())
+        {
             player.TakeDamage();
+            Destroy(collision.gameObject);
+        }
     }
 }

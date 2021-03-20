@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public event DelegateFire OnFire;
     public delegate void DelegateReload(int nbBullet);
     public event DelegateReload OnReloading;
-    public delegate void DelegateHit(int life);
+    public delegate void DelegateHit(int life, int maxLife);
     public event DelegateHit OnHit;
 
     [SerializeField]
@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour
         {
             life = Mathf.Clamp(life--, 0, maxLife);
             if (OnHit != null)
-                OnHit(life);
+                OnHit(life, maxLife);
         }
     }
 
@@ -212,6 +212,6 @@ public class PlayerController : MonoBehaviour
     {
         life = Mathf.Clamp(life--, 0, maxLife);
         if (OnHit != null)
-            OnHit(life);
+            OnHit(life, maxLife);
     }
 }
