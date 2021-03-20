@@ -9,7 +9,7 @@ public class PostProcess : MonoBehaviour
     [SerializeField]
     private Texture pattern = null;
     private Material material;
-
+    private int MaxLight = 50;
     private void Start()
     {
         Shader shader = Resources.Load<Shader>("Shaders/Post Process Effects");
