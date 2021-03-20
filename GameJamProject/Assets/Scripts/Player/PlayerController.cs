@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public event DelegateFire OnFire;
     public delegate void DelegateReload(int nbBullet);
     public event DelegateReload OnReloading;
+    public delegate void DelegateHit(int life, int maxLife);
+    public event DelegateHit OnHit;
 
     [SerializeField]
     private Grid grid = null;
@@ -32,6 +34,11 @@ public class PlayerController : MonoBehaviour
     private bool startTimer = false;
     private bool isReloading = false;
     private PoolManager poolManager = null;
+    //life
+    [Header("Life")]
+    [SerializeField]
+    private int maxLife = 4;
+    private int life = 4;
     //movement
     private float lerp = 0.0f;
     private int currentGrid = 0;
@@ -156,7 +163,7 @@ public class PlayerController : MonoBehaviour
             if (OnFire != null)
                 OnFire(numberBullets);
             timerBullet = 0.0f;
-            startTimer = true;          
+            startTimer = true;
             GameObject bullet = poolManager.Get(prefabBullet, transform.position, Quaternion.identity);
             bullet.GetComponent<Bullets>().LaunchProjectile(bulletType);
             timerFireRate = fireRate;
@@ -189,5 +196,22 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(timerBetweenReload);
         } while (numberBullets < numberMaxBullets);
         isReloading = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Enemy>())
+        {
+            life = Mathf.Clamp(life--, 0, maxLife);
+            if (OnHit != null)
+                OnHit(life, maxLife);
+        }
+    }
+
+    public void TakeDamage()
+    {
+        life = Mathf.Clamp(life - 1, 0, maxLife);
+        if (OnHit != null)
+            OnHit(life, maxLife);
     }
 }
