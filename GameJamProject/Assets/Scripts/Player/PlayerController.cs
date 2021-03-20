@@ -36,13 +36,13 @@ public class PlayerController : MonoBehaviour
     private bool move = false;
     private Vector2[] posGrid = new Vector2[4];
     private Vector2 posBeforeMov = Vector2.zero;
-    private CustomCamera cam = null;
+    private ShakeEffect shakeEffect = null;
     private Number[] numbers = null;
     // Start is called before the first frame update
     void Start()
     {
         numbers = GameObject.FindObjectsOfType<Number>();
-        cam = GameObject.FindObjectOfType<CustomCamera>();
+        shakeEffect = GameObject.FindObjectOfType<ShakeEffect>();
         posGrid[0] = transform.position;
         for (int i = 1; i < posGrid.Length; ++i)
         {
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
     {
         if (numberBullets > 0 && timerFireRate <= 0.0f)
         {
-            cam.Shake();
+            shakeEffect.StartEffect();
 
             numberBullets--;
             if (OnFire != null)
