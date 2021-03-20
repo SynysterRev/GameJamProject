@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomCamera : MonoBehaviour
+public class ShakeEffect : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField]
-    private Transform target = null;
     [SerializeField]
     private float speed = 0.1f;
 
@@ -27,29 +25,21 @@ public class CustomCamera : MonoBehaviour
     {
         startPos = transform.position;
     }
-    void FixedUpdate()
+
+    private void Update()
     {
-        Follow(target);
+        transform.position = Vector3.Lerp(transform.position, startPos, speed);
+        rotationZ = Mathf.Lerp(rotationZ, 0.0f, speed);
+        transform.eulerAngles = new Vector3(0.0f, 0.0f, rotationZ);
     }
 
-    public void Follow(Transform _Target)
-    {
-        if (_Target)
-        {
-
-            transform.position = Vector3.Lerp(transform.position, startPos, speed);
-            rotationZ = Mathf.Lerp(rotationZ, 0.0f, speed);
-            transform.eulerAngles = new Vector3(0.0f, 0.0f, rotationZ);
-        }
-    }
-
-    public void Shake(float _positionFactor, float _rotationFactor, float _time)
+    public void StartEffect(float _positionFactor, float _rotationFactor, float _time)
     {
         if (!isShaking)
             StartCoroutine(ShakeCoroutine(_positionFactor, _rotationFactor, _time));
     }
 
-    public void Shake()
+    public void StartEffect()
     {
         if (!isShaking)
             StartCoroutine(ShakeCoroutine(shakinessPos, shakinessRot, time));
@@ -63,7 +53,7 @@ public class CustomCamera : MonoBehaviour
         {
             Vector3 newPos = transform.position;
             newPos.x += Random.Range(-_positionFactor, _positionFactor);
-           // newPos.y += Random.Range(-_positionFactor, _positionFactor);
+            newPos.y += Random.Range(-_positionFactor, _positionFactor);
 
             rotationZ += Random.Range(-_rotationFactor, _rotationFactor);
             //move with random position

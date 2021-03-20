@@ -87,7 +87,7 @@ fixed4 SampleSpriteTexture (float2 uv)
 
 fixed4 SpriteFrag(v2f IN) : SV_Target
 {
-    fixed4 c = SampleSpriteTexture (float2(IN.texcoord.x,IN.texcoord.y-(_Time.y*2.0f))) * IN.color;
+    fixed4 c = SampleSpriteTexture (float2(IN.texcoord.x,IN.texcoord.y-(_Time.y*6.0f))) * IN.color;
     c.rgb *= c.a;
     return c;
 }
