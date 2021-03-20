@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     private ShakeEffect shakeEffect = null;
     private Number[] numbers = null;
     private Animator anim = null;
+    private Coroutine fireCoroutine = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -119,12 +120,16 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetTrigger("right");
             GameObject go = GameObject.Instantiate(dustPrefab, transform.position, Quaternion.identity);
+            if (fireCoroutine != null)
+                StopCoroutine(fireCoroutine);
         }
         else
         {
             anim.SetTrigger("left");
             GameObject go = GameObject.Instantiate(dustPrefab, transform.position, Quaternion.identity);
             go.transform.localScale = new Vector2(-1.0f, 1.0f);
+            if (fireCoroutine != null)
+                StopCoroutine(fireCoroutine);
         }
     }
     private void Move()
@@ -136,6 +141,7 @@ public class PlayerController : MonoBehaviour
         {
             currentGrid = nextIndex;
             move = false;
+
             anim.SetTrigger("idle");
         }
     }
@@ -175,7 +181,11 @@ public class PlayerController : MonoBehaviour
 
             anim.SetTrigger("fire");
             GameObject.Instantiate(firePrefab, transform.position - new Vector3(0.0f, 0.3f, 0.0f), Quaternion.identity, transform);
-            StartCoroutine(ChangeTo("idle", 0.5f));
+
+            if (fireCoroutine != null)
+                StopCoroutine(fireCoroutine);
+                
+            fireCoroutine = StartCoroutine(ChangeTo("idle", 0.5f));
         }
         else
         {

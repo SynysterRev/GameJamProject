@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8237420245134743096}
   - component: {fileID: 8530779767502657571}
   - component: {fileID: 6390511020003562769}
+  - component: {fileID: 3534621857001281294}
   m_Layer: 0
   m_Name: fire_fx
   m_TagString: Untagged
@@ -113,5 +114,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfe66d186cec9af42859018b00efeae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3534621857001281294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415968711570431900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6026321773cc66f4abea6a9621763719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
