@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private float timerBullet = 0.0f;
     private bool startTimer = false;
     private bool isReloading = false;
+    private PoolManager poolManager = null;
     //movement
     private float lerp = 0.0f;
     private int currentGrid = 0;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        poolManager = PoolManager.Instance;
         numbers = GameObject.FindObjectsOfType<Number>();
         shakeEffect = GameObject.FindObjectOfType<ShakeEffect>();
         posGrid[0] = transform.position;
@@ -130,8 +132,8 @@ public class PlayerController : MonoBehaviour
             if (OnFire != null)
                 OnFire(numberBullets);
             timerBullet = 0.0f;
-            startTimer = true;
-            GameObject bullet = Instantiate(prefabBullet, transform.position, Quaternion.identity);
+            startTimer = true;          
+            GameObject bullet = poolManager.Get(prefabBullet, transform.position, Quaternion.identity);
             bullet.GetComponent<Bullets>().LaunchProjectile(bulletType);
             timerFireRate = fireRate;
         }
