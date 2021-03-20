@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUDBullet : MonoBehaviour
+public class HUDPlayer : MonoBehaviour
 {
     [Header("Bullets")]
     [SerializeField]

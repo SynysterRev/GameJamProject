@@ -210,7 +210,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage()
     {
-        life = Mathf.Clamp(life--, 0, maxLife);
+        life = Mathf.Clamp(life - 1, 0, maxLife);
         if (OnHit != null)
             OnHit(life, maxLife);
     }
