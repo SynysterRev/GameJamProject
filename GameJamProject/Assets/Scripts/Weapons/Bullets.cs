@@ -32,4 +32,10 @@ public class Bullets : MonoBehaviour
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.down * speed;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Enemy>())
+            Destroy(gameObject);
+    }
 }
