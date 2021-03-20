@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public delegate void DelegateDeath();
+    public event DelegateDeath OnDeath;
+
     [SerializeField]
     private float speed = 10.0f;
     [SerializeField]
@@ -11,10 +14,12 @@ public class Enemy : MonoBehaviour
     private BulletType[] orderDamage = null;
     private Rigidbody2D rb = null;
     private int currentOrderDmg = 0;
+    private GameManager gm = null;
     // Start is called before the first frame update
     void Start()
     {
-        LoadData();
+
+
     }
 
     // Update is called once per frame
@@ -22,8 +27,10 @@ public class Enemy : MonoBehaviour
     {
 
     }
-    virtual protected void LoadData()
+    virtual public void LoadData(int indexTypeEnemy)
     {
+        gm = GameManager.Instance;
+        this.indexTypeEnemy = indexTypeEnemy;
         string textFile = Resources.Load<TextAsset>("DataEnemy/Data").ToString();
         string[] allData = textFile.Split('\n');
         orderDamage = new BulletType[allData[indexTypeEnemy].Length - 1];
@@ -40,8 +47,9 @@ public class Enemy : MonoBehaviour
         }
 
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.up * speed;
+        rb.velocity = Vector2.up * speed * gm.CustomDT;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Bullets bullet = collision.GetComponent<Bullets>();
@@ -50,11 +58,12 @@ public class Enemy : MonoBehaviour
             if (bullet.TypeBullet == orderDamage[currentOrderDmg])
             {
                 currentOrderDmg++;
-                Debug.Log(currentOrderDmg + " " + orderDamage.Length);
                 if (currentOrderDmg >= orderDamage.Length)
                 {
                     //anim mort
                     rb.velocity = Vector2.zero;
+                    if (OnDeath != null)
+                        OnDeath();
                     Destroy(gameObject);
                 }
             }
