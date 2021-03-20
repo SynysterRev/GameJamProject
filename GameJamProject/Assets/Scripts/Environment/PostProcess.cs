@@ -23,6 +23,6 @@ public class PostProcess : MonoBehaviour
         RenderTexture rt = RenderTexture.GetTemporary(src.width, src.height);
         Graphics.Blit(src, rt, material, 1);
         Graphics.Blit(rt, dest, material, 0);
-        rt.Release();
+        RenderTexture.ReleaseTemporary(rt);
     }
 }
