@@ -13,11 +13,10 @@ public class HUDEnemy : MonoBehaviour
     private Image img = null;
     private Enemy enemy = null;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         enemy = GetComponentInParent<Enemy>();
         enemy.OnChangeType += UpdateArrow;
-
     }
 
     // Update is called once per frame
@@ -30,10 +29,10 @@ public class HUDEnemy : MonoBehaviour
     {
         switch (type)
         {
-            case BulletType.red:
+            case BulletType.leftType:
                 img.sprite = leftSprite;
                 break;
-            case BulletType.blue:
+            case BulletType.rightType:
                 img.sprite = rightSprite;
                 break;
         }

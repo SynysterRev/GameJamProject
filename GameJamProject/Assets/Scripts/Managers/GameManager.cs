@@ -14,6 +14,12 @@ public class GameManager : Singleton<GameManager>
 
     public float CustomDT { get => customDT; set => customDT = value; }
 
+    private void Start()
+    {
+        if (OnUpdateScore != null)
+            OnUpdateScore(score);
+    }
+
     public void UpdateScore(int points)
     {
         score += points;

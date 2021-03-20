@@ -1,17 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public enum BulletType
 {
-    red,
-    blue
+    leftType,
+    rightType
 }
 public class Bullets : MonoBehaviour
 {
+    public delegate void DelegateDestroy();
+    public event DelegateDestroy OnTouchEnemy;
     [SerializeField]
     private float speed = 1.0f;
-    private BulletType bulletType = BulletType.blue;
+    private BulletType bulletType = BulletType.rightType;
 
     public BulletType TypeBullet { get => bulletType; }
     // Start is called before the first frame update
@@ -33,9 +37,9 @@ public class Bullets : MonoBehaviour
         rb.velocity = Vector2.down * speed;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void CorrectBullet()
     {
-       /* if (collision.GetComponent<Enemy>())
-            Destroy(gameObject);*/
+        if (OnTouchEnemy != null)
+            OnTouchEnemy();
     }
 }

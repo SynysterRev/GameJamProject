@@ -185,17 +185,6 @@ Grid:
   m_CorrespondingSourceObject: {fileID: 4293285263022734046, guid: 91cdc1d19d0135143b4a16a51c69a24c, type: 3}
   m_PrefabInstance: {fileID: 50883919}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &64410063 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 64410063, guid: 4c2dd15f2b89f214bbd5595d927c2a73, type: 3}
-  m_PrefabInstance: {fileID: 506685827411580991}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &520605349
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,6 +496,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed617a8504acbdc42a47505617d98f17, type: 3}
+--- !u!114 &1122791269 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1122791269, guid: 4c2dd15f2b89f214bbd5595d927c2a73, type: 3}
+  m_PrefabInstance: {fileID: 506685827411580991}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1789122455
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,17 +629,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2043161736 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2043161736, guid: 4c2dd15f2b89f214bbd5595d927c2a73, type: 3}
-  m_PrefabInstance: {fileID: 506685827411580991}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &329706219796260142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -705,13 +694,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 361328009, guid: 4c2dd15f2b89f214bbd5595d927c2a73, type: 3}
-      propertyPath: nbLife
+      propertyPath: score
       value: 
-      objectReference: {fileID: 64410063}
-    - target: {fileID: 361328009, guid: 4c2dd15f2b89f214bbd5595d927c2a73, type: 3}
-      propertyPath: imgLife
-      value: 
-      objectReference: {fileID: 2043161736}
+      objectReference: {fileID: 1122791269}
     - target: {fileID: 506685827185571251, guid: 4c2dd15f2b89f214bbd5595d927c2a73, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

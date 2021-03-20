@@ -17,6 +17,9 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb = null;
     private int currentOrderDmg = 0;
     private GameManager gm = null;
+    private int score = 0;
+
+    public BulletType CorrectDmg { get => orderDamage[currentOrderDmg]; }
     // Start is called before the first frame update
     void Start()
     {
@@ -29,26 +32,19 @@ public class Enemy : MonoBehaviour
     {
 
     }
-    virtual public void LoadData(int indexTypeEnemy)
+    virtual public void LoadData(int indexEnemy)
     {
         gm = GameManager.Instance;
-        this.indexTypeEnemy = indexTypeEnemy;
-        string textFile = Resources.Load<TextAsset>("DataEnemy/Data").ToString();
-        string[] allData = textFile.Split('\n');
-        orderDamage = new BulletType[allData[indexTypeEnemy].Length - 1];
-        for (int i = 0; i < allData[indexTypeEnemy].Length - 1; ++i)
-        {
-            if (allData[indexTypeEnemy][i] == 'R')
-            {
-                orderDamage[i] = BulletType.blue;
-            }
-            else
-            {
-                orderDamage[i] = BulletType.red;
-            }
-        }
+        indexTypeEnemy = indexEnemy;
+        TypeDamageScriptable combo = Resources.Load<TypeDamageScriptable>("DataEnemy/Combos");
+
+        score = combo.listCombo[indexTypeEnemy].scoreValue;
+        orderDamage = new BulletType[combo.listCombo[indexTypeEnemy].bulletTypes.Length];
+        for (int i = 0; i < orderDamage.Length; ++i)
+            orderDamage[i] = combo.listCombo[indexTypeEnemy].bulletTypes[i];
         if (OnChangeType != null)
             OnChangeType(orderDamage[currentOrderDmg]);
+
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.up * speed * gm.CustomDT;
     }
@@ -56,10 +52,12 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Bullets bullet = collision.GetComponent<Bullets>();
+        PlayerController player = collision.GetComponent<PlayerController>();
         if (bullet)
         {
             if (bullet.TypeBullet == orderDamage[currentOrderDmg])
             {
+                bullet.CorrectBullet();
                 currentOrderDmg++;
                 if (currentOrderDmg >= orderDamage.Length)
                 {
@@ -67,6 +65,7 @@ public class Enemy : MonoBehaviour
                     rb.velocity = Vector2.zero;
                     if (OnDeath != null)
                         OnDeath();
+                    gm.UpdateScore(score);
                     Destroy(gameObject);
                 }
                 else
@@ -75,6 +74,14 @@ public class Enemy : MonoBehaviour
                         OnChangeType(orderDamage[currentOrderDmg]);
                 }
             }
+        }
+        else if (player)
+        {
+            //anim mort
+            rb.velocity = Vector2.zero;
+            if (OnDeath != null)
+                OnDeath();
+            Destroy(gameObject);
         }
     }
 }

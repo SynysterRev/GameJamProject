@@ -59,13 +59,13 @@ public class SpawnerEnemy : MonoBehaviour
         {
             //spawn one line at the time
             timerSpawn = sp[currentWave].timerBetweenEachSpawn;
-            enemiesLeft += sp[currentWave].sizeWave;
             for (int i = 0; i < 4; ++i)
             {
                 int indexWave = (wave + 1) * 4 - 4 + i;
                 int indexEnemy = sp[currentWave].waves[indexWave];
                 if (indexEnemy != -1)
                 {
+                    enemiesLeft ++;
                     GameObject go = Instantiate(prefabEnemy, new Vector2(-1.5f + i, nbCell * Vector2.down.y), Quaternion.identity);
                     Enemy enemy = go.GetComponent<Enemy>();
                     enemy.LoadData(indexEnemy);
