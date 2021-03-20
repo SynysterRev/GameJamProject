@@ -1,25 +1,31 @@
 fileFormatVersion: 2
-guid: 302f9bdeeb6ffed488e4b01b5b45fa3f
+guid: 382e4a6863659944ab8cf4430710a1e3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5115618752126089108
-    second: player_idle_0
+      213: -1595736872862477925
+    second: dust_0
   - first:
-      213: -5050664382621690000
-    second: player_idle_1
+      213: 2220361516922240005
+    second: dust_1
   - first:
-      213: -5937766766644145194
-    second: player_idle_2
+      213: -3900193300909595132
+    second: dust_2
   - first:
-      213: 6213080392227812279
-    second: player_idle_3
+      213: 7302673073982842297
+    second: dust_3
   - first:
-      213: 3690559776813112666
-    second: player_idle_4
+      213: 1051091026966099959
+    second: dust_4
   - first:
-      213: 8748236870546505689
-    second: player_idle_5
+      213: -3246277489707905420
+    second: dust_5
+  - first:
+      213: 5145894643363775658
+    second: dust_6
+  - first:
+      213: -4390563669279041178
+    second: dust_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -50,7 +56,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -83,7 +89,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -95,7 +101,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -107,7 +113,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -119,7 +125,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -133,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_idle_0
+      name: dust_0
       rect:
         serializedVersion: 2
         x: 0
@@ -147,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c68823149dba109b0800000000000000
-      internalID: -5115618752126089108
+      spriteID: b911a0ac4cdcad9e0800000000000000
+      internalID: -1595736872862477925
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_idle_1
+      name: dust_1
       rect:
         serializedVersion: 2
         x: 32
@@ -168,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 077dd1ae08f68e9b0800000000000000
-      internalID: -5050664382621690000
+      spriteID: 50cf811290f40de10800000000000000
+      internalID: 2220361516922240005
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_idle_2
+      name: dust_2
       rect:
         serializedVersion: 2
         x: 64
@@ -189,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d35e0bd590d89da0800000000000000
-      internalID: -5937766766644145194
+      spriteID: 406ecef5bdabfd9c0800000000000000
+      internalID: -3900193300909595132
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_idle_3
+      name: dust_3
       rect:
         serializedVersion: 2
         x: 96
@@ -210,14 +216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b3feabc2bb493650800000000000000
-      internalID: 6213080392227812279
+      spriteID: 9b5ae85387e485560800000000000000
+      internalID: 7302673073982842297
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_idle_4
+      name: dust_4
       rect:
         serializedVersion: 2
         x: 128
@@ -231,14 +237,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5d5a474090873330800000000000000
-      internalID: 3690559776813112666
+      spriteID: 7f73ae858b9369e00800000000000000
+      internalID: 1051091026966099959
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_idle_5
+      name: dust_5
       rect:
         serializedVersion: 2
         x: 160
@@ -252,8 +258,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9df36e7651bf76970800000000000000
-      internalID: 8748236870546505689
+      spriteID: 47e0d9792d7e2f2d0800000000000000
+      internalID: -3246277489707905420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dust_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa4884df9e3e96740800000000000000
+      internalID: 5145894643363775658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dust_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66913e0ea959113c0800000000000000
+      internalID: -4390563669279041178
       vertices: []
       indices: 
       edges: []
@@ -261,7 +309,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 20909006f8529d4469cddd7b768571ab
+    spriteID: 1ba5fe301969eee4a84e1101be99ebcb
     internalID: 0
     vertices: []
     indices: 
