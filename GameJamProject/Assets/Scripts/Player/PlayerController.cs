@@ -176,6 +176,7 @@ public class PlayerController : MonoBehaviour
             GameObject bullet = poolManager.Get(prefabBullet, transform.position, Quaternion.identity);
             Bullets bul = bullet.GetComponent<Bullets>();
             bul.LaunchProjectile(bulletType);
+            bul.OnTouchEnemy -= ReloadOneBullet;
             bul.OnTouchEnemy += ReloadOneBullet;
             timerFireRate = fireRate;
 

@@ -12,11 +12,14 @@ public class HUDEnemy : MonoBehaviour
     [SerializeField]
     private Image img = null;
     private Enemy enemy = null;
+    private BulletType type;
+    private Animator anim = null;
     // Start is called before the first frame update
     private void Awake()
     {
         enemy = GetComponentInParent<Enemy>();
         enemy.OnChangeType += UpdateArrow;
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -26,6 +29,12 @@ public class HUDEnemy : MonoBehaviour
     }
 
     private void UpdateArrow(BulletType type)
+    {
+        this.type = type;
+        anim.SetTrigger("Start");
+    }
+
+    public void ChangeSprite()
     {
         switch (type)
         {
