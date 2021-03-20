@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour
             OnChangeType(orderDamage[currentOrderDmg]);
 
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.up * speed * gm.CustomDT;
+        rb.velocity = Vector2.up * speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

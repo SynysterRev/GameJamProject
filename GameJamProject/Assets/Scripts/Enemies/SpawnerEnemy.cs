@@ -14,13 +14,14 @@ public class SpawnerEnemy : MonoBehaviour
     private int currentWave = 0;
     private int wave = 0;
     private float timerSpawn = 0.0f;
-    private bool canSpawn = true;
+    private bool canSpawn = false;
     private GameManager gm = null;
     //waves
     private bool waitNewWave = false;
     private bool startTimerWave = false;
     private float timerBetweenWave = 5.0f;
     private int enemiesLeft = 0;
+    private bool endLevel = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +50,7 @@ public class SpawnerEnemy : MonoBehaviour
 
     private void LoadData()
     {
-        TextAsset textFile = Resources.Load<TextAsset>("DataEnemy/Spawner");
+        TextAsset textFile = Resources.Load<TextAsset>("DataEnemy/Level" + LevelManager.Instance.IndexLevel + "/Spawner");
         sp = JsonHelper.FromJson<Spawn>(textFile.text);
         Resources.UnloadAsset(textFile);
     }
@@ -83,6 +84,7 @@ public class SpawnerEnemy : MonoBehaviour
                 //wave over then level completed
                 if (currentWave == sp.Length)
                 {
+                    endLevel = true;
                     //end level
                 }
                 else if (enemiesLeft == 0)
@@ -110,6 +112,10 @@ public class SpawnerEnemy : MonoBehaviour
             waitNewWave = false;
             timerBetweenWave = 5.0f;
             startTimerWave = true;
+        }
+        else if(enemiesLeft == 0 && endLevel)
+        {
+            LevelManager.Instance.ShowEndLevel();
         }
     }
 
