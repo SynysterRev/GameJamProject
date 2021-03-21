@@ -9,7 +9,8 @@ public class GameManager : Singleton<GameManager>
     public delegate void DelegateScore(int score);
     public event DelegateScore OnUpdateScore;
 
-
+    [SerializeField]
+    private GameObject fxSlowmo = null;
     private float customDT = 1.0f;
     private float timerSlowMo = 5.0f;
     private bool startSlowMo = true;
@@ -61,6 +62,7 @@ public class GameManager : Singleton<GameManager>
             timerSlowMo = 5.0f;
             startSlowMo = true;
             Time.timeScale = 0.5f;
+            Instantiate(fxSlowmo, Vector3.zero, Quaternion.identity);
         }
     }
     private void SaveScore()
@@ -82,6 +84,7 @@ public class GameManager : Singleton<GameManager>
         nbKillRequired--;
         if (nbKillRequired == 0)
         {
+            Instantiate(fxSlowmo, Vector3.zero, Quaternion.identity);
             timerSlowMo = 5.0f;
             startSlowMo = true;
             Time.timeScale = 0.5f;

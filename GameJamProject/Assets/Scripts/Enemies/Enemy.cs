@@ -79,6 +79,7 @@ public class Enemy : MonoBehaviour
                     rb.velocity = Vector2.zero;
                     if (OnDeath != null)
                         OnDeath(this);
+                    SoundManager.Instance.PlaySoundClip(1);
                     gm.UpdateScore(score);
 
                     GameObject.Instantiate(explosionPrefab, transform.GetChild(0).position, Quaternion.identity);
@@ -97,6 +98,7 @@ public class Enemy : MonoBehaviour
             rb.velocity = Vector2.zero;
             if (OnDeath != null)
                 OnDeath(this);
+            SoundManager.Instance.PlaySoundClip(1);
             Destroy(gameObject);
         }
     }
