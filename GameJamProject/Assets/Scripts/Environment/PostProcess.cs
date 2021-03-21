@@ -7,6 +7,8 @@ public class PostProcess : MonoBehaviour
     [SerializeField]
     private Color screenColor = Color.white;
     [SerializeField]
+    private Color bckColor = Color.black;
+    [SerializeField]
     private Texture pattern = null;
     [SerializeField]
     private Camera EffectCam = null;
@@ -17,6 +19,7 @@ public class PostProcess : MonoBehaviour
         Shader shader = Resources.Load<Shader>("Shaders/Post Process Effects");
         material = new Material(shader);
         material.SetColor("_Color", screenColor);
+        material.SetColor("_ColorBck", bckColor);
         material.SetTexture("_Pattern", pattern);
     }
 
