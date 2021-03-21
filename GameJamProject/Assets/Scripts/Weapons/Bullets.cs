@@ -34,7 +34,7 @@ public class Bullets : MonoBehaviour
     {
         this.bulletType = bulletType;
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.down * speed;
+        rb.velocity = Vector2.down * speed * (1.0f / Time.timeScale);
     }
 
     public void CorrectBullet()
