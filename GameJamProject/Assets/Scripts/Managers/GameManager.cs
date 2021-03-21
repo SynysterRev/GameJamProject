@@ -135,6 +135,10 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene("Menu");
     }
 
+    public void GoMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
     public bool IsNewHighscore()
     {
         return highScores[0] < score;
