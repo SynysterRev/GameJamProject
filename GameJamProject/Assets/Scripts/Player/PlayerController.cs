@@ -235,13 +235,16 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Reload()
     {
         isReloading = true;
+        int nbBUllet = numberMaxBullets - numberBullets;
+        int bul = 0;
         do
         {
             numberBullets++;
             if (OnReloading != null)
                 OnReloading(numberBullets);
             yield return new WaitForSeconds(timerBetweenReload);
-        } while (numberBullets < numberMaxBullets);
+            bul++;
+        } while (bul < nbBUllet);
         isReloading = false;
     }
 
@@ -263,5 +266,10 @@ public class PlayerController : MonoBehaviour
             isDead = true;
             LevelManager.Instance.ShowGameOver();
         }
+    }
+
+    private void DestroyObject()
+    {
+        Destroy(gameObject);
     }
 }
