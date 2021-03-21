@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     private int indexTypeEnemy = 0;
     [SerializeField]
     private GameObject firePrefab = null;
+    [SerializeField]
+    private GameObject explosionPrefab = null;
     private BulletType[] orderDamage = null;
     private Rigidbody2D rb = null;
     private int currentOrderDmg = 0;
@@ -59,7 +61,7 @@ public class Enemy : MonoBehaviour
         {
             GameObject go = GameObject.Instantiate(firePrefab, bullet.transform.position, Quaternion.identity);
             go.transform.localScale *= 0.5f;
-            
+
             if (bullet.TypeBullet == orderDamage[currentOrderDmg])
             {
 
@@ -76,6 +78,8 @@ public class Enemy : MonoBehaviour
                     if (OnDeath != null)
                         OnDeath();
                     gm.UpdateScore(score);
+
+                    GameObject.Instantiate(explosionPrefab, transform.GetChild(0).position, Quaternion.identity);
                     Destroy(gameObject);
                 }
                 else
