@@ -81,14 +81,18 @@ Shader "Hidden/Retro Screen Effect"
             sampler2D _MainTex;
             sampler2D _Pattern;
             fixed4 _Color;
+            fixed4 _ColorBck;
 
             fixed4 frag (v2f i) : SV_Target
             {
                 float aspect = _ScreenParams.x / _ScreenParams.y;
                 fixed4 col = tex2D(_MainTex, i.uv);
                 fixed4 patternCol = tex2D(_Pattern, float2(i.uv.x*aspect,i.uv.y)*6.0f);
+                float avg = max(0.0f,col.r-col.g-col.b);
                 // just invert the colors
-                col.rgb = lerp(col.rgb, patternCol*_Color, max(0.0f,col.r-col.g-col.b));
+                col.rgb = lerp(col.rgb,_ColorBck,1.0-step(0.1,col.rgb));
+                col.rgb = lerp(col.rgb, patternCol*_Color,avg);
+                
                 return col;
             }
             ENDCG
