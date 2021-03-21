@@ -57,6 +57,7 @@ public class GameManager : Singleton<GameManager>
         {
             SlowMo();
         }
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Space))
         {
             timerSlowMo = 5.0f;
@@ -64,6 +65,7 @@ public class GameManager : Singleton<GameManager>
             Time.timeScale = 0.5f;
             Instantiate(fxSlowmo, Vector3.zero, Quaternion.identity);
         }
+#endif
     }
     private void SaveScore()
     {
