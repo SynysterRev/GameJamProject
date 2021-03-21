@@ -15314,6 +15314,10 @@ PrefabInstance:
       propertyPath: score
       value: 
       objectReference: {fileID: 1122791269}
+    - target: {fileID: 823421315, guid: 4c2dd15f2b89f214bbd5595d927c2a73, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -29
+      objectReference: {fileID: 0}
     - target: {fileID: 1122791269, guid: 4c2dd15f2b89f214bbd5595d927c2a73, type: 3}
       propertyPath: m_Text
       value: 'Score : 0'

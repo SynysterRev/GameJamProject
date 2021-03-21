@@ -137,7 +137,7 @@ public class SpawnerEnemy : MonoBehaviour
             {
                 if (enemiesList[i] != null)
                 {
-
+                    enemiesList[i].AutoDestruction();
                 }
             }
         }

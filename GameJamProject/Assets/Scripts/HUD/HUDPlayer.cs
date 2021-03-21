@@ -51,6 +51,6 @@ public class HUDPlayer : MonoBehaviour
 
     private void UpdateScore(int score)
     {
-        this.score.text = score.ToString();
+        this.score.text = "Score : " + score.ToString();
     }
 }
