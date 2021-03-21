@@ -101,8 +101,8 @@ MonoBehaviour:
   speed: 10
   prefabBullet: {fileID: 8405986005043459447, guid: 83ecd67873736434e9455ef5c8b7123d, type: 3}
   numberMaxBullets: 7
-  timerBeforeReload: 3
-  timerBetweenReload: 0.2
+  timerBeforeReload: 6
+  timerBetweenReload: 0.15
   fireRate: 0.05
   dustPrefab: {fileID: 8537942242101730718, guid: 0fa84ad69ad8e5646beb988874f3dfb8, type: 3}
   firePrefab: {fileID: 1415968711570431900, guid: 831f2f03d58d87943b045dfb5f9579b0, type: 3}

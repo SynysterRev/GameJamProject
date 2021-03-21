@@ -1571,6 +1571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   play: {fileID: 921427605}
+  survival: {fileID: 1703604967}
   credit: {fileID: 1832973299}
   quit: {fileID: 1319531933}
   highScore:
