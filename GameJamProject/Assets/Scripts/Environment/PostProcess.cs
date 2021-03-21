@@ -13,7 +13,7 @@ public class PostProcess : MonoBehaviour
     [SerializeField]
     private Camera EffectCam = null;
     private Material material;
-
+    private float radius = 0.0f;
     private void Start()
     {
         Shader shader = Resources.Load<Shader>("Shaders/Post Process Effects");
@@ -32,9 +32,30 @@ public class PostProcess : MonoBehaviour
 
         Graphics.Blit(src, rt0, material, 1);
         Graphics.Blit(rt0, rt1, material, 2);
-        Graphics.Blit(rt1, dest, material, 0);
+        Graphics.Blit(rt1, rt0, material, 3);
+        Graphics.Blit(rt0, dest, material, 0);
 
         RenderTexture.ReleaseTemporary(rt0);
         RenderTexture.ReleaseTemporary(rt1);
+    }
+
+    public void StartEffect()
+    {
+        StartCoroutine(CoroutineEffect(1.0f));
+    }
+
+    public void StopEffect()
+    {
+        StartCoroutine(CoroutineEffect(0.0f));
+    }
+    private IEnumerator CoroutineEffect(float _finalValue)
+    {
+        do
+        {
+            radius = Mathf.Lerp(radius, _finalValue, 0.01f);
+            material.SetFloat("_Radius", radius);
+            yield return null;
+          
+        } while (Mathf.Abs(_finalValue - radius) > 0.1f);
     }
 }
