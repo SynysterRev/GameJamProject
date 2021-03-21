@@ -51,6 +51,8 @@ public class Enemy : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.up * speed;
+        GetComponentInChildren<Animator>().SetTrigger("enemy" + (Random.Range(0, 101) > 50 ? 0 : 1).ToString());
+        GetComponentInChildren<SpriteRenderer>().color = combo.listCombo[indexTypeEnemy].color;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

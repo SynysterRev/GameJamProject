@@ -12,5 +12,6 @@ public class TypeDamageScriptable : ScriptableObject
     {
         public BulletType[] bulletTypes;
         public int scoreValue;
+        public Color color;
     }
 }
