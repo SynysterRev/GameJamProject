@@ -18,9 +18,11 @@ public class GameManager : Singleton<GameManager>
     public float CustomDT { get => customDT; set => customDT = value; }
     public string[] HighScoreName { get => highScoresName; }
     public int[] HighScores { get => highScores; }
+    public int Score { get => score; }
 
     private new void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         for (int i = 0; i < highScores.Length; ++i)
         {
             highScores[i] = 0;
@@ -29,7 +31,7 @@ public class GameManager : Singleton<GameManager>
             {
                 highScores[i] = PlayerPrefs.GetInt(i.ToString());
             }
-            if (PlayerPrefs.HasKey("name"+ i.ToString()))
+            if (PlayerPrefs.HasKey("name" + i.ToString()))
             {
                 highScoresName[i] = PlayerPrefs.GetString("name" + i.ToString());
             }
@@ -37,21 +39,24 @@ public class GameManager : Singleton<GameManager>
     }
     private void OnApplicationQuit()
     {
-        for (int i = 0; i < highScores.Length; ++i)
-        {
-            if (highScores[i] > 0)
-            {
-                PlayerPrefs.SetInt(i.ToString(), highScores[i]);
-                PlayerPrefs.GetString("name" + i.ToString(), highScoresName[i]);
-            }
-        }
+        SaveScore();
     }
     private void Start()
     {
         if (OnUpdateScore != null)
             OnUpdateScore(score);
     }
-
+    private void SaveScore()
+    {
+        for (int i = 0; i < highScores.Length; ++i)
+        {
+            if (highScores[i] > 0)
+            {
+                PlayerPrefs.SetInt(i.ToString(), highScores[i]);
+                PlayerPrefs.SetString("name" + i.ToString(), highScoresName[i]);
+            }
+        }
+    }
     public void UpdateScore(int points)
     {
         score += points;
@@ -72,9 +77,56 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void Retry()
+    public void Retry(string pseudo = "")
     {
+        if (IsNewHighscore())
+        {
+            RegisterNewScore(pseudo);
+        }
         score = 0;
         SceneManager.LoadScene("Level0");
+    }
+
+    public void GoMenu(string pseudo = "")
+    {
+        if (IsNewHighscore())
+        {
+            RegisterNewScore(pseudo);
+        }
+        score = 0;
+        SceneManager.LoadScene("Menu");
+    }
+
+    public bool IsNewHighscore()
+    {
+        return highScores[0] < score;
+    }
+
+    public void RegisterNewScore(string pseudo)
+    {
+        bool isFound = false;
+        int previousScore = 0;
+        string previousName = "";
+        for (int i = 0; i < highScores.Length; ++i)
+        {
+            if (isFound)
+            {
+                int tmpScore = highScores[i];
+                string tmpName = highScoresName[i];
+                highScores[i] = previousScore;
+                highScoresName[i] = previousName;
+                previousScore = tmpScore;
+                previousName = tmpName;
+            }
+            else if (score > highScores[i])
+            {
+                isFound = true;
+                previousScore = highScores[i];
+                previousName = highScoresName[i];
+                highScores[i] = score;
+                highScoresName[i] = pseudo;
+            }
+        }
+        SaveScore();
     }
 }

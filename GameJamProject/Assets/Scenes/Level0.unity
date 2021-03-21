@@ -15427,6 +15427,10 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 50883920}
+    - target: {fileID: 1615267655535893714, guid: 9a64ea6efaba0fc4098ce099623596b5, type: 3}
+      propertyPath: maxLife
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1615267655535893716, guid: 9a64ea6efaba0fc4098ce099623596b5, type: 3}
       propertyPath: m_RootOrder
       value: 3
