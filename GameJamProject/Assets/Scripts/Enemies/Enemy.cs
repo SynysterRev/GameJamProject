@@ -73,12 +73,11 @@ public class Enemy : MonoBehaviour
 
                 if (currentOrderDmg >= orderDamage.Length)
                 {
-
                     //anim mort
+                    gm.UpdateScore(score);
                     rb.velocity = Vector2.zero;
                     if (OnDeath != null)
                         OnDeath(this);
-                    gm.UpdateScore(score);
 
                     GameObject.Instantiate(explosionPrefab, transform.GetChild(0).position, Quaternion.identity);
                     Destroy(gameObject);
