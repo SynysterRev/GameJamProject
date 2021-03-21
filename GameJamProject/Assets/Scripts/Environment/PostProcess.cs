@@ -56,6 +56,6 @@ public class PostProcess : MonoBehaviour
             material.SetFloat("_Radius", radius);
             yield return null;
           
-        } while (Mathf.Abs(_finalValue - radius) > 0.1f);
+        } while (Mathf.Abs(_finalValue - radius) > 0.01f);
     }
 }
