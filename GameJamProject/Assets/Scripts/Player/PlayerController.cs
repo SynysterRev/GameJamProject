@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public delegate void DelegateFire(int nbBullet);
+    public delegate void DelegateFire(int nbBullet, bool reload);
     public event DelegateFire OnFire;
-    public delegate void DelegateReload(int nbBullet);
+    public delegate void DelegateReload(int nbBullet, bool reload);
     public event DelegateReload OnReloading;
     public delegate void DelegateHit(int life, int maxLife);
     public event DelegateHit OnHit;
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
             numberBullets--;
             if (OnFire != null)
-                OnFire(numberBullets);
+                OnFire(numberBullets, false);
             timerBullet = 0.0f;
             startTimer = true;
 
@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
 
             if (fireCoroutine != null)
                 StopCoroutine(fireCoroutine);
-                
+
             fireCoroutine = StartCoroutine(ChangeTo("idle", 0.5f));
         }
         else
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
         {
             numberBullets++;
             if (OnReloading != null)
-                OnReloading(numberBullets);
+                OnReloading(numberBullets, true);
             if (numberBullets == numberMaxBullets)
             {
                 startTimer = false;
@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour
         {
             numberBullets++;
             if (OnReloading != null)
-                OnReloading(numberBullets);
+                OnReloading(numberBullets, true);
             yield return new WaitForSeconds(timerBetweenReload);
             bul++;
         } while (bul < nbBUllet);
@@ -261,7 +261,7 @@ public class PlayerController : MonoBehaviour
         life = Mathf.Clamp(life - 1, 0, maxLife);
         if (OnHit != null)
             OnHit(life, maxLife);
-        if(life == 0)
+        if (life == 0)
         {
             isDead = true;
             LevelManager.Instance.ShowGameOver();
