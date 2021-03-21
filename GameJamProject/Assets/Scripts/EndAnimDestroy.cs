@@ -25,4 +25,9 @@ public class EndAnimDestroy : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void DestroyParent()
+    {
+        Destroy(transform.parent.gameObject);
+    }
 }

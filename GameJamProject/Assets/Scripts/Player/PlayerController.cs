@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public delegate void DelegateFire(int nbBullet);
+    public delegate void DelegateFire(int nbBullet, bool reload);
     public event DelegateFire OnFire;
-    public delegate void DelegateReload(int nbBullet);
+    public delegate void DelegateReload(int nbBullet, bool reload);
     public event DelegateReload OnReloading;
     public delegate void DelegateHit(int life, int maxLife);
     public event DelegateHit OnHit;
@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
 
             numberBullets--;
             if (OnFire != null)
-                OnFire(numberBullets);
+                OnFire(numberBullets, false);
             timerBullet = 0.0f;
             startTimer = true;
 
@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour
         {
             numberBullets++;
             if (OnReloading != null)
-                OnReloading(numberBullets);
+                OnReloading(numberBullets, true);
             if (numberBullets == numberMaxBullets)
             {
                 startTimer = false;
@@ -242,7 +242,7 @@ public class PlayerController : MonoBehaviour
         {
             numberBullets++;
             if (OnReloading != null)
-                OnReloading(numberBullets);
+                OnReloading(numberBullets, true);
             yield return new WaitForSeconds(timerBetweenReload);
             bul++;
         } while (bul < nbBUllet);
