@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         if (!move) return;
-        lerp = Mathf.Clamp(lerp + Time.deltaTime * speed, 0.0f, 1.0f);
+        lerp = Mathf.Clamp(lerp + speed * Time.unscaledDeltaTime, 0.0f, 1.0f);
         transform.position = Vector2.Lerp(posBeforeMov, posGrid[nextIndex], lerp);
         if (lerp == 1.0f)
         {
@@ -170,6 +170,7 @@ public class PlayerController : MonoBehaviour
     {
         if (numberBullets > 0 && timerFireRate <= 0.0f)
         {
+            SoundManager.Instance.PlaySoundClip(0);
             shakeEffect.StartEffect();
 
             numberBullets--;
@@ -266,6 +267,7 @@ public class PlayerController : MonoBehaviour
             isDead = true;
             LevelManager.Instance.ShowGameOver();
             anim.SetTrigger("death");
+            SoundManager.Instance.PlaySoundClip(1);
         }
     }
 

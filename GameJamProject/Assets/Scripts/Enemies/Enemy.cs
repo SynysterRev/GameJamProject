@@ -51,6 +51,8 @@ public class Enemy : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.up * speed;
+        GetComponentInChildren<Animator>().SetTrigger("enemy" + (Random.Range(0, 101) > 50 ? 0 : 1).ToString());
+        GetComponentInChildren<SpriteRenderer>().color = combo.listCombo[indexTypeEnemy].color;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -62,22 +64,20 @@ public class Enemy : MonoBehaviour
             GameObject go = GameObject.Instantiate(firePrefab, bullet.transform.position, Quaternion.identity);
             go.transform.localScale *= 0.5f;
 
+            SoundManager.Instance.PlaySoundClip(1);
             if (bullet.TypeBullet == orderDamage[currentOrderDmg])
             {
 
                 bullet.CorrectBullet();
                 currentOrderDmg++;
 
-
-
                 if (currentOrderDmg >= orderDamage.Length)
                 {
-
                     //anim mort
+                    gm.UpdateScore(score);
                     rb.velocity = Vector2.zero;
                     if (OnDeath != null)
                         OnDeath(this);
-                    gm.UpdateScore(score);
 
                     GameObject.Instantiate(explosionPrefab, transform.GetChild(0).position, Quaternion.identity);
                     Destroy(gameObject);
@@ -91,6 +91,7 @@ public class Enemy : MonoBehaviour
         }
         else if (player)
         {
+            SoundManager.Instance.PlaySoundClip(1);
             //anim mort
             rb.velocity = Vector2.zero;
             if (OnDeath != null)

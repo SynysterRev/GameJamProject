@@ -33,7 +33,6 @@ public class EndLevelHUD : MonoBehaviour
         this.isNewHighscore = isNewHighscore;
         this.isGameOver = isGameOver;
         anim.SetTrigger("Start");
-        score.text = "Score : " + GameManager.Instance.Score.ToString();
         menuButton.onClick.AddListener(() => GameManager.Instance.GoMenu(pseudo.text));
         if (isGameOver)
         {
@@ -45,6 +44,7 @@ public class EndLevelHUD : MonoBehaviour
             nextTryagainText.text = "Next";
             nextTryagainButton.onClick.AddListener(GameManager.Instance.NextLevel);
         }
+        score.text = "Score : " + GameManager.Instance.Score.ToString();
     }
 
     private void EndAnimation()

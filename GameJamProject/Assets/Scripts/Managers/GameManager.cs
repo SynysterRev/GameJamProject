@@ -9,8 +9,12 @@ public class GameManager : Singleton<GameManager>
     public delegate void DelegateScore(int score);
     public event DelegateScore OnUpdateScore;
 
-
+    [SerializeField]
+    private GameObject fxSlowmo = null;
     private float customDT = 1.0f;
+    private float timerSlowMo = 5.0f;
+    private bool startSlowMo = true;
+    private int nbKillRequired = 20;
     private static int score = 0;
     private static string[] highScoresName = new string[5];
     private static int[] highScores = new int[5];
@@ -46,6 +50,21 @@ public class GameManager : Singleton<GameManager>
         if (OnUpdateScore != null)
             OnUpdateScore(score);
     }
+
+    private void Update()
+    {
+        if (startSlowMo)
+        {
+            SlowMo();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            timerSlowMo = 5.0f;
+            startSlowMo = true;
+            Time.timeScale = 0.5f;
+            Instantiate(fxSlowmo, Vector3.zero, Quaternion.identity);
+        }
+    }
     private void SaveScore()
     {
         for (int i = 0; i < highScores.Length; ++i)
@@ -62,6 +81,25 @@ public class GameManager : Singleton<GameManager>
         score += points;
         if (OnUpdateScore != null)
             OnUpdateScore(score);
+        nbKillRequired--;
+        if (nbKillRequired == 0)
+        {
+            Instantiate(fxSlowmo, Vector3.zero, Quaternion.identity);
+            timerSlowMo = 5.0f;
+            startSlowMo = true;
+            Time.timeScale = 0.5f;
+        }
+    }
+
+    public void SlowMo()
+    {
+        timerSlowMo -= Time.unscaledDeltaTime;
+        if (timerSlowMo <= 0.0f)
+        {
+            startSlowMo = false;
+            Time.timeScale = 1.0f;
+            nbKillRequired = 20;
+        }
     }
 
     public void NextLevel()
@@ -97,6 +135,10 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene("Menu");
     }
 
+    public void GoMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
     public bool IsNewHighscore()
     {
         return highScores[0] < score;
