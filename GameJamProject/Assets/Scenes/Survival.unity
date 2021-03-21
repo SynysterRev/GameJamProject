@@ -15531,7 +15531,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: infiniteSpawn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveDifficulty.m_Curve.Array.size
