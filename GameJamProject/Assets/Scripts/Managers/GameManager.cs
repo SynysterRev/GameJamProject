@@ -12,12 +12,29 @@ public class GameManager : Singleton<GameManager>
 
     private float customDT = 1.0f;
     private static int score = 0;
-    private int[] highScores = new int[5];
+    private static int[] highScores = new int[5];
     public float CustomDT { get => customDT; set => customDT = value; }
 
     private new void Awake()
     {
-
+        for (int i = 0; i < highScores.Length; ++i)
+        {
+            highScores[i] = 0;
+            if (PlayerPrefs.HasKey(i.ToString()))
+            {
+                highScores[i] = PlayerPrefs.GetInt(i.ToString());
+            }
+        }
+    }
+    private void OnApplicationQuit()
+    {
+        for (int i = 0; i < highScores.Length; ++i)
+        {
+            if (highScores[i] > 0)
+            {
+                PlayerPrefs.SetInt(i.ToString(), highScores[i]);
+            }
+        }
     }
     private void Start()
     {
