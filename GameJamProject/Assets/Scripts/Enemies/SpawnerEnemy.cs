@@ -106,6 +106,11 @@ public class SpawnerEnemy : MonoBehaviour
         }
     }
 
+    private void InfiniteSpawn()
+    {
+
+    }
+
     private void UpdateEnemiesLeft(Enemy enemy)
     {
         if (enemiesList.Contains(enemy))
