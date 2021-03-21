@@ -22,6 +22,7 @@ public class SpawnerEnemy : MonoBehaviour
     private float timerBetweenWave = 5.0f;
     private int enemiesLeft = 0;
     private bool endLevel = false;
+    private List<Enemy> enemiesList = new List<Enemy>();
     // Start is called before the first frame update
     void Start()
     {
@@ -66,11 +67,12 @@ public class SpawnerEnemy : MonoBehaviour
                 int indexEnemy = sp[currentWave].waves[indexWave];
                 if (indexEnemy != -1)
                 {
-                    enemiesLeft ++;
+                    enemiesLeft++;
                     GameObject go = Instantiate(prefabEnemy, new Vector2(-1.5f + i, nbCell * Vector2.down.y), Quaternion.identity);
                     Enemy enemy = go.GetComponent<Enemy>();
                     enemy.LoadData(indexEnemy);
                     enemy.OnDeath += UpdateEnemiesLeft;
+                    enemiesList.Add(enemy);
                 }
             }
             //next line
@@ -104,8 +106,10 @@ public class SpawnerEnemy : MonoBehaviour
         }
     }
 
-    private void UpdateEnemiesLeft()
+    private void UpdateEnemiesLeft(Enemy enemy)
     {
+        if (enemiesList.Contains(enemy))
+            enemiesList.Remove(enemy);
         enemiesLeft--;
         if (enemiesLeft == 0 & waitNewWave)
         {
@@ -113,7 +117,7 @@ public class SpawnerEnemy : MonoBehaviour
             timerBetweenWave = 5.0f;
             startTimerWave = true;
         }
-        else if(enemiesLeft == 0 && endLevel)
+        else if (enemiesLeft == 0 && endLevel)
         {
             LevelManager.Instance.ShowEndLevel();
         }
@@ -124,6 +128,20 @@ public class SpawnerEnemy : MonoBehaviour
         canSpawn = true;
     }
 
+    public void StopSpawner(bool destroyAllEnemy)
+    {
+        canSpawn = false;
+        if (destroyAllEnemy)
+        {
+            for (int i = 0; i < enemiesList.Count; ++i)
+            {
+                if (enemiesList[i] != null)
+                {
+
+                }
+            }
+        }
+    }
 
     [Serializable]
     public class Spawn
