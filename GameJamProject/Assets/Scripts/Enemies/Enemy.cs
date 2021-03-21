@@ -64,13 +64,12 @@ public class Enemy : MonoBehaviour
             GameObject go = GameObject.Instantiate(firePrefab, bullet.transform.position, Quaternion.identity);
             go.transform.localScale *= 0.5f;
 
+            SoundManager.Instance.PlaySoundClip(1);
             if (bullet.TypeBullet == orderDamage[currentOrderDmg])
             {
 
                 bullet.CorrectBullet();
                 currentOrderDmg++;
-
-
 
                 if (currentOrderDmg >= orderDamage.Length)
                 {
@@ -79,7 +78,6 @@ public class Enemy : MonoBehaviour
                     rb.velocity = Vector2.zero;
                     if (OnDeath != null)
                         OnDeath(this);
-                    SoundManager.Instance.PlaySoundClip(1);
                     gm.UpdateScore(score);
 
                     GameObject.Instantiate(explosionPrefab, transform.GetChild(0).position, Quaternion.identity);
@@ -94,11 +92,11 @@ public class Enemy : MonoBehaviour
         }
         else if (player)
         {
+            SoundManager.Instance.PlaySoundClip(1);
             //anim mort
             rb.velocity = Vector2.zero;
             if (OnDeath != null)
                 OnDeath(this);
-            SoundManager.Instance.PlaySoundClip(1);
             Destroy(gameObject);
         }
     }
