@@ -265,6 +265,7 @@ public class PlayerController : MonoBehaviour
         {
             isDead = true;
             LevelManager.Instance.ShowGameOver();
+            anim.SetTrigger("death");
         }
     }
 
