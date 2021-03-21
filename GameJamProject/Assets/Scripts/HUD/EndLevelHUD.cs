@@ -44,7 +44,6 @@ public class EndLevelHUD : MonoBehaviour
             nextTryagainText.text = "Next";
             nextTryagainButton.onClick.AddListener(GameManager.Instance.NextLevel);
         }
-
         score.text = "Score : " + GameManager.Instance.Score.ToString();
     }
 
