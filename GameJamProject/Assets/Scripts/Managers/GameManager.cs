@@ -22,13 +22,13 @@ public class GameManager : Singleton<GameManager>
 
     private new void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         for (int i = 0; i < highScores.Length; ++i)
         {
             highScores[i] = 0;
             highScoresName[i] = "-";
             if (PlayerPrefs.HasKey(i.ToString()))
             {
-                Debug.Log("cc " + i);
                 highScores[i] = PlayerPrefs.GetInt(i.ToString());
             }
             if (PlayerPrefs.HasKey("name" + i.ToString()))
@@ -39,21 +39,24 @@ public class GameManager : Singleton<GameManager>
     }
     private void OnApplicationQuit()
     {
-        for (int i = 0; i < highScores.Length; ++i)
-        {
-            if (highScores[i] > 0)
-            {
-                PlayerPrefs.SetInt(i.ToString(), highScores[i]);
-                PlayerPrefs.GetString("name" + i.ToString(), highScoresName[i]);
-            }
-        }
+        SaveScore();
     }
     private void Start()
     {
         if (OnUpdateScore != null)
             OnUpdateScore(score);
     }
-
+    private void SaveScore()
+    {
+        for (int i = 0; i < highScores.Length; ++i)
+        {
+            if (highScores[i] > 0)
+            {
+                PlayerPrefs.SetInt(i.ToString(), highScores[i]);
+                PlayerPrefs.SetString("name" + i.ToString(), highScoresName[i]);
+            }
+        }
+    }
     public void UpdateScore(int points)
     {
         score += points;
@@ -74,14 +77,22 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void Retry()
+    public void Retry(string pseudo = "")
     {
+        if (IsNewHighscore())
+        {
+            RegisterNewScore(pseudo);
+        }
         score = 0;
         SceneManager.LoadScene("Level0");
     }
 
-    public void GoMenu()
+    public void GoMenu(string pseudo = "")
     {
+        if (IsNewHighscore())
+        {
+            RegisterNewScore(pseudo);
+        }
         score = 0;
         SceneManager.LoadScene("Menu");
     }
@@ -109,7 +120,6 @@ public class GameManager : Singleton<GameManager>
             }
             else if (score > highScores[i])
             {
-                Debug.Log("trouvé");
                 isFound = true;
                 previousScore = highScores[i];
                 previousName = highScoresName[i];
@@ -117,5 +127,6 @@ public class GameManager : Singleton<GameManager>
                 highScoresName[i] = pseudo;
             }
         }
+        SaveScore();
     }
 }

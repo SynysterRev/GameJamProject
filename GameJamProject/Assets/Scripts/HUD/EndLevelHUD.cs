@@ -34,16 +34,11 @@ public class EndLevelHUD : MonoBehaviour
         this.isGameOver = isGameOver;
         anim.SetTrigger("Start");
         score.text = "Score : " + GameManager.Instance.Score.ToString();
-        menuButton.onClick.AddListener(GameManager.Instance.GoMenu);
+        menuButton.onClick.AddListener(() => GameManager.Instance.GoMenu(pseudo.text));
         if (isGameOver)
         {
             nextTryagainText.text = "Retry";
-            nextTryagainButton.onClick.AddListener(GameManager.Instance.Retry);
-            if(isNewHighscore)
-            {
-                menuButton.onClick.AddListener(() => GameManager.Instance.RegisterNewScore(pseudo.text));
-                nextTryagainButton.onClick.AddListener(() => GameManager.Instance.RegisterNewScore(pseudo.text));
-            }
+            nextTryagainButton.onClick.AddListener(() => GameManager.Instance.Retry(pseudo.text));
         }
         else
         {
