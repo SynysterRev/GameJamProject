@@ -52,11 +52,10 @@ public class PostProcess : MonoBehaviour
     {
         do
         {
-            Debug.Log(radius);
-            radius = Mathf.Lerp(radius, _finalValue, 0.1f);
+            radius = Mathf.Lerp(radius, _finalValue, 0.01f);
             material.SetFloat("_Radius", radius);
             yield return null;
-
-        } while (Mathf.Abs(_finalValue - radius) < 0.1f);
+          
+        } while (Mathf.Abs(_finalValue - radius) > 0.1f);
     }
 }
