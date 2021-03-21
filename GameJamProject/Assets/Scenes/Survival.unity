@@ -15531,7 +15531,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: infiniteSpawn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveDifficulty.m_Curve.Array.size
@@ -15563,7 +15563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveTimerSpawn.m_Curve.Array.data[1].value
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveDifficulty.m_Curve.Array.data[0].inSlope
@@ -15575,11 +15575,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveTimerSpawn.m_Curve.Array.data[0].inSlope
-      value: -0.020833334
+      value: -0.016666668
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveTimerSpawn.m_Curve.Array.data[1].inSlope
-      value: -0.020833334
+      value: -0.016666668
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveDifficulty.m_Curve.Array.data[0].outSlope
@@ -15595,7 +15595,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveTimerSpawn.m_Curve.Array.data[0].outSlope
-      value: -0.020833334
+      value: -0.016666668
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveTimerSpawn.m_Curve.Array.data[1].inWeight
@@ -15603,7 +15603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveTimerSpawn.m_Curve.Array.data[1].outSlope
-      value: -0.020833334
+      value: -0.016666668
       objectReference: {fileID: 0}
     - target: {fileID: 329706219762123538, guid: cb75d4397550bb14e907eb6daab485ae, type: 3}
       propertyPath: curveDifficulty.m_Curve.Array.data[0].outWeight

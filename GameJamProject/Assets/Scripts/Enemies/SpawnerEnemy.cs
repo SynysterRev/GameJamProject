@@ -34,7 +34,6 @@ public class SpawnerEnemy : MonoBehaviour
     [SerializeField]
     private AnimationCurve curveTimerSpawn = null;
     private WaveTypeScriptable waveType = null;
-    private int indexDifficulty = 0;
     private float timerDifficulty = 0.0f;
 
     // Start is called before the first frame update
