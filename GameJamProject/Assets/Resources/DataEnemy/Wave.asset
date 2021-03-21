@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d87b95e59f62fb43b19218202bbef67, type: 3}
+  m_Name: Wave
+  m_EditorClassIdentifier: 
+  listTypeWave:
+  - listWaveDifficulty:
+    - indexPositionEnemy: ffffffffffffffff00000000ffffffff
+    - indexPositionEnemy: ffffffff01000000ffffffffffffffff
+    - indexPositionEnemy: ffffffff0100000000000000ffffffff
+    - indexPositionEnemy: 00000000ffffffff0100000000000000
+    - indexPositionEnemy: 01000000ffffffffffffffff01000000
+    - indexPositionEnemy: 0000000000000000ffffffff01000000
+  - listWaveDifficulty:
+    - indexPositionEnemy: ffffffff02000000ffffffffffffffff
+    - indexPositionEnemy: ffffffff00000000ffffffff03000000
+    - indexPositionEnemy: 02000000ffffffffffffffff03000000
+    - indexPositionEnemy: ffffffff000000000100000002000000
+    - indexPositionEnemy: ffffffff03000000ffffffffffffffff
+    - indexPositionEnemy: ffffffff03000000ffffffff01000000
+    - indexPositionEnemy: ffffffff03000000ffffffff02000000
+    - indexPositionEnemy: ffffffff030000000000000002000000
+  - listWaveDifficulty:
+    - indexPositionEnemy: ffffffff04000000ffffffffffffffff
+    - indexPositionEnemy: ffffffff04000000ffffffff05000000
+    - indexPositionEnemy: ffffffff000000000100000005000000
+    - indexPositionEnemy: 030000000000000001000000ffffffff
+    - indexPositionEnemy: 03000000ffffffff05000000ffffffff
+    - indexPositionEnemy: 04000000ffffffffffffffff02000000
+    - indexPositionEnemy: 00000000ffffffff0500000004000000
+    - indexPositionEnemy: 01000000ffffffffffffffff04000000
+    - indexPositionEnemy: 05000000ffffffffffffffff04000000
+    - indexPositionEnemy: 01000000000000000200000004000000
