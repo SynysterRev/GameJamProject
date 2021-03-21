@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private Number[] numbers = null;
     private Animator anim = null;
     private Coroutine fireCoroutine = null;
+    private bool isDead = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +61,9 @@ public class PlayerController : MonoBehaviour
         numbers = GameObject.FindObjectsOfType<Number>();
         shakeEffect = GameObject.FindObjectOfType<ShakeEffect>();
         posGrid[0] = transform.position;
+        life = maxLife;
+        if (OnHit != null)
+            OnHit(life, maxLife);
         for (int i = 1; i < posGrid.Length; ++i)
         {
             posGrid[i] = posGrid[i - 1] + Vector2.right * grid.cellSize.x;
@@ -69,6 +73,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead) return;
         InputMovement();
         Move();
         InputFire();
@@ -244,9 +249,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.GetComponent<Enemy>())
         {
-            life = Mathf.Clamp(--life, 0, maxLife);
-            if (OnHit != null)
-                OnHit(life, maxLife);
+            TakeDamage();
         }
     }
 
@@ -255,5 +258,10 @@ public class PlayerController : MonoBehaviour
         life = Mathf.Clamp(life - 1, 0, maxLife);
         if (OnHit != null)
             OnHit(life, maxLife);
+        if(life == 0)
+        {
+            isDead = true;
+            LevelManager.Instance.ShowGameOver();
+        }
     }
 }

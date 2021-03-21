@@ -31,7 +31,13 @@ public class LevelManager : Singleton<LevelManager>
     public void ShowEndLevel()
     {
         endLevel.transform.parent.gameObject.SetActive(true);
-        endLevel.ShowEndLevel(false);
+        endLevel.ShowEndLevel(false, false);
+    }
+
+    public void ShowGameOver()
+    {
+        endLevel.transform.parent.gameObject.SetActive(true);
+        endLevel.ShowEndLevel(true, GameManager.Instance.IsNewHighscore());
     }
 
     public void StartLevel()

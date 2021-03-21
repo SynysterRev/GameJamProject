@@ -7,12 +7,20 @@ using UnityEngine.UI;
 public class EndLevelHUD : MonoBehaviour
 {
     [SerializeField]
+    private Text score = null;
+    [SerializeField]
     private Button menuButton = null;
     [SerializeField]
     private Button nextTryagainButton = null;
     [SerializeField]
     private Text nextTryagainText = null;
+    [SerializeField]
+    private Animator animNewScore = null;
+    [SerializeField]
+    private InputField pseudo = null;
     private Animator anim = null;
+    private bool isNewHighscore = false;
+    private bool isGameOver = false;
     private void Awake()
     {
         menuButton.interactable = false;
@@ -20,14 +28,22 @@ public class EndLevelHUD : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void ShowEndLevel(bool isGameOver)
+    public void ShowEndLevel(bool isGameOver, bool isNewHighscore)
     {
+        this.isNewHighscore = isNewHighscore;
+        this.isGameOver = isGameOver;
         anim.SetTrigger("Start");
-        menuButton.onClick.AddListener(() => SceneManager.LoadScene("Menu"));
+        score.text = "Score : " + GameManager.Instance.Score.ToString();
+        menuButton.onClick.AddListener(GameManager.Instance.GoMenu);
         if (isGameOver)
         {
             nextTryagainText.text = "Retry";
             nextTryagainButton.onClick.AddListener(GameManager.Instance.Retry);
+            if(isNewHighscore)
+            {
+                menuButton.onClick.AddListener(() => GameManager.Instance.RegisterNewScore(pseudo.text));
+                nextTryagainButton.onClick.AddListener(() => GameManager.Instance.RegisterNewScore(pseudo.text));
+            }
         }
         else
         {
@@ -37,6 +53,19 @@ public class EndLevelHUD : MonoBehaviour
     }
 
     private void EndAnimation()
+    {
+        if (!isNewHighscore)
+        {
+            menuButton.interactable = true;
+            nextTryagainButton.interactable = true;
+        }
+        else if(isGameOver && isNewHighscore)
+        {
+            animNewScore.SetTrigger("Start");
+        }
+    }
+
+    public void EnableButtons()
     {
         menuButton.interactable = true;
         nextTryagainButton.interactable = true;
