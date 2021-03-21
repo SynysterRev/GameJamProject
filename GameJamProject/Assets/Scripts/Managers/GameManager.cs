@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager>
     private GameObject fxSlowmo = null;
     private float customDT = 1.0f;
     private float timerSlowMo = 5.0f;
-    private bool startSlowMo = true;
+    private bool startSlowMo = false;
     private int nbKillRequired = 20;
     private static int score = 0;
     private static string[] highScoresName = new string[5];
