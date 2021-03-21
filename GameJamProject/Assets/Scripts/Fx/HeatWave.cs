@@ -16,5 +16,8 @@ public class HeatWave : MonoBehaviour
     {
         sprend.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - transform.localScale.x);
         transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, 0.01f);
+
+        if (transform.localScale.x > 0.98f)
+            Destroy(gameObject);
     }
 }
