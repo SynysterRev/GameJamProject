@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private bool startTimer = false;
     private bool isReloading = false;
     private PoolManager poolManager = null;
+    private Coroutine coroutineReload = null;
     //life
     [Header("Life")]
     [SerializeField]
@@ -153,9 +154,9 @@ public class PlayerController : MonoBehaviour
 
     private void InputFire()
     {
-        if (move || isReloading) return;
+        if (move) return;
         if (timerFireRate > 0.0f)
-            timerFireRate -= Time.deltaTime;
+            timerFireRate -= Time.unscaledDeltaTime;
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             Fire(BulletType.rightType);
@@ -170,14 +171,25 @@ public class PlayerController : MonoBehaviour
     {
         if (numberBullets > 0 && timerFireRate <= 0.0f)
         {
+
+
             SoundManager.Instance.PlaySoundClip(0);
             shakeEffect.StartEffect();
 
             numberBullets--;
             if (OnFire != null)
                 OnFire(numberBullets, false);
-            timerBullet = 0.0f;
-            startTimer = true;
+            //timerBullet = 0.0f;
+            if (isReloading)
+            {
+                if (coroutineReload != null)
+                    StopCoroutine(coroutineReload);
+                isReloading = false;
+                startTimer = true;
+                timerBullet = 0.0f;
+            }
+            else
+                startTimer = true;
 
             GameObject bullet = poolManager.Get(prefabBullet, transform.position, Quaternion.identity);
             Bullets bul = bullet.GetComponent<Bullets>();
@@ -210,12 +222,15 @@ public class PlayerController : MonoBehaviour
     {
         if (startTimer)
         {
-            timerBullet += Time.deltaTime;
+            timerBullet += Time.unscaledDeltaTime;
             if (timerBullet >= timerBeforeReload)
             {
+                timerBullet = 0.0f;
                 startTimer = false;
                 if (numberBullets < numberMaxBullets)
-                    StartCoroutine(Reload());
+                {
+                    coroutineReload = StartCoroutine(Reload());
+                }
             }
         }
     }
@@ -240,10 +255,11 @@ public class PlayerController : MonoBehaviour
         int bul = 0;
         do
         {
+            //Debug.Log("reload");
             numberBullets++;
             if (OnReloading != null)
                 OnReloading(numberBullets, true);
-            yield return new WaitForSeconds(timerBetweenReload);
+            yield return new WaitForSecondsRealtime(timerBetweenReload);
             bul++;
         } while (bul < nbBUllet);
         isReloading = false;

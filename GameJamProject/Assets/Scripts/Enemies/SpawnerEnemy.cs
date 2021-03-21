@@ -23,6 +23,19 @@ public class SpawnerEnemy : MonoBehaviour
     private int enemiesLeft = 0;
     private bool endLevel = false;
     private List<Enemy> enemiesList = new List<Enemy>();
+
+
+    //infinite spawn
+    [Header("Infinite")]
+    [SerializeField]
+    private bool infiniteSpawn = false;
+    [SerializeField]
+    private AnimationCurve curveDifficulty = null;
+    [SerializeField]
+    private AnimationCurve curveTimerSpawn = null;
+    private WaveTypeScriptable waveType = null;
+    private float timerDifficulty = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,27 +46,46 @@ public class SpawnerEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canSpawn)
+        if (infiniteSpawn)
         {
-            TrySpawn();
-        }
-        else if (startTimerWave)
-        {
-            timerBetweenWave -= Time.deltaTime * gm.CustomDT;
-            if (timerBetweenWave <= 0.0f)
+            if (canSpawn)
             {
-                startTimerWave = false;
-                canSpawn = true;
-                timerSpawn = 0.0f;
+                timerDifficulty += Time.deltaTime;
+                InfiniteSpawn();
+            }
+        }
+        else
+        {
+            if (canSpawn)
+            {
+                TrySpawn();
+            }
+            else if (startTimerWave)
+            {
+                timerBetweenWave -= Time.deltaTime * gm.CustomDT;
+                if (timerBetweenWave <= 0.0f)
+                {
+                    startTimerWave = false;
+                    canSpawn = true;
+                    timerSpawn = 0.0f;
+                }
             }
         }
     }
 
     private void LoadData()
     {
-        TextAsset textFile = Resources.Load<TextAsset>("DataEnemy/Level" + LevelManager.Instance.IndexLevel + "/Spawner");
-        sp = JsonHelper.FromJson<Spawn>(textFile.text);
-        Resources.UnloadAsset(textFile);
+        if (infiniteSpawn)
+        {
+            waveType = Resources.Load<WaveTypeScriptable>("DataEnemy/Wave");
+        }
+        else
+        {
+
+            TextAsset textFile = Resources.Load<TextAsset>("DataEnemy/Level" + LevelManager.Instance.IndexLevel + "/Spawner");
+            sp = JsonHelper.FromJson<Spawn>(textFile.text);
+            Resources.UnloadAsset(textFile);
+        }
     }
     private void TrySpawn()
     {
@@ -102,13 +134,46 @@ public class SpawnerEnemy : MonoBehaviour
         }
         else
         {
-            timerSpawn -= Time.deltaTime * gm.CustomDT;
+            timerSpawn -= Time.deltaTime;
         }
     }
 
     private void InfiniteSpawn()
     {
-
+        if (timerSpawn <= 0.0f)
+        {
+            timerSpawn = curveTimerSpawn.Evaluate(timerDifficulty);
+            int index;
+            if (curveDifficulty.Evaluate(timerDifficulty) > 0.66f)
+            {
+                index = UnityEngine.Random.Range(0, waveType.listTypeWave.Count);
+            }
+            else if (curveDifficulty.Evaluate(timerDifficulty) > 0.33f)
+            {
+                index = UnityEngine.Random.Range(0, 2);
+            }
+            else
+            {
+                index = 0;
+            }
+            int indexWave = UnityEngine.Random.Range(0, waveType.listTypeWave[index].listWaveDifficulty.Count);
+            for (int i = 0; i < 4; ++i)
+            {
+                int indexEnemy = waveType.listTypeWave[index].listWaveDifficulty[indexWave].indexPositionEnemy[i];
+                if (indexEnemy != -1)
+                {
+                    GameObject go = Instantiate(prefabEnemy, new Vector2(-1.5f + i, nbCell * Vector2.down.y), Quaternion.identity);
+                    Enemy enemy = go.GetComponent<Enemy>();
+                    enemy.LoadData(indexEnemy);
+                    enemy.OnDeath += UpdateEnemiesLeft;
+                    enemiesList.Add(enemy);
+                }
+            }
+        }
+        else
+        {
+            timerSpawn -= Time.deltaTime;
+        }
     }
 
     private void UpdateEnemiesLeft(Enemy enemy)

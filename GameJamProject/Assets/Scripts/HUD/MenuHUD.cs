@@ -9,6 +9,8 @@ public class MenuHUD : MonoBehaviour
     [SerializeField]
     private Button play = null;
     [SerializeField]
+    private Button survival = null;
+    [SerializeField]
     private Button credit = null;
     [SerializeField]
     private Button quit = null;
@@ -23,6 +25,7 @@ public class MenuHUD : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         play.onClick.AddListener(Play);
+        survival.onClick.AddListener(Survival);
         credit.onClick.AddListener(Credits);
         quit.onClick.AddListener(Quit);
         for (int i = 0; i < highScore.Length; ++i)
@@ -40,6 +43,10 @@ public class MenuHUD : MonoBehaviour
     private void Play()
     {
         SceneManager.LoadScene("Level0");
+    }
+    private void Survival()
+    {
+        SceneManager.LoadScene("Survival");
     }
     private void Credits()
     {
