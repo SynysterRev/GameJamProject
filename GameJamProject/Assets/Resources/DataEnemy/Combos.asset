@@ -15,13 +15,19 @@ MonoBehaviour:
   listCombo:
   - bulletTypes: 01000000
     scoreValue: 1
+    color: {r: 0.99559474, g: 1, b: 0, a: 1}
   - bulletTypes: 00000000
     scoreValue: 1
+    color: {r: 0, g: 0.24705882, b: 0.8901961, a: 1}
   - bulletTypes: 0100000000000000
     scoreValue: 2
+    color: {r: 1, g: 0.85882354, b: 0.4509804, a: 1}
   - bulletTypes: 0000000001000000
     scoreValue: 2
+    color: {r: 0, g: 0.8235294, b: 1, a: 1}
   - bulletTypes: 000000000100000001000000
     scoreValue: 3
+    color: {r: 0, g: 0.9254902, b: 0.53333336, a: 1}
   - bulletTypes: 010000000000000001000000
     scoreValue: 3
+    color: {r: 0.7490196, g: 0.83137256, b: 0.2627451, a: 1}
