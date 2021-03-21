@@ -36,6 +36,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void ShowGameOver()
     {
+        spawnerEnemy.StopSpawner(true);
         endLevel.transform.parent.gameObject.SetActive(true);
         endLevel.ShowEndLevel(true, GameManager.Instance.IsNewHighscore());
     }

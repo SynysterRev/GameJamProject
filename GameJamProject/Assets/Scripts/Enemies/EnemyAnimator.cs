@@ -21,4 +21,9 @@ public class EnemyAnimator : MonoBehaviour
         AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo(0);
         anim.Play(state.fullPathHash, -1, Random.Range(0f, 1f));
     }
+
+    private void DestroyObject()
+    {
+        Destroy(transform.parent.gameObject);
+    }
 }

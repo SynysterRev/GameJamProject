@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public delegate void DelegateDeath();
+    public delegate void DelegateDeath(Enemy enemy);
     public event DelegateDeath OnDeath;
     public delegate void DelegateTypeBullet(BulletType type);
     public event DelegateTypeBullet OnChangeType;
@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
                     //anim mort
                     rb.velocity = Vector2.zero;
                     if (OnDeath != null)
-                        OnDeath();
+                        OnDeath(this);
                     gm.UpdateScore(score);
 
                     GameObject.Instantiate(explosionPrefab, transform.GetChild(0).position, Quaternion.identity);
@@ -94,8 +94,14 @@ public class Enemy : MonoBehaviour
             //anim mort
             rb.velocity = Vector2.zero;
             if (OnDeath != null)
-                OnDeath();
+                OnDeath(this);
             Destroy(gameObject);
         }
+    }
+
+    public void AutoDestruction()
+    {
+        rb.velocity = Vector2.zero;
+        GetComponentInChildren<Animator>().SetTrigger("death");
     }
 }
