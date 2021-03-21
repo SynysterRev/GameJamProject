@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     private static int score = 0;
     private static string[] highScoresName = new string[5];
     private static int[] highScores = new int[5];
+    private PostProcess camPostProcess = null;
 
     public float CustomDT { get => customDT; set => customDT = value; }
     public string[] HighScoreName { get => highScoresName; }
@@ -47,6 +48,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
+        camPostProcess = GameObject.FindObjectOfType<PostProcess>();
         if (OnUpdateScore != null)
             OnUpdateScore(score);
     }
@@ -59,6 +61,8 @@ public class GameManager : Singleton<GameManager>
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            camPostProcess.StartEffect();
+
             timerSlowMo = 5.0f;
             startSlowMo = true;
             Time.timeScale = 0.5f;
@@ -84,6 +88,8 @@ public class GameManager : Singleton<GameManager>
         nbKillRequired--;
         if (nbKillRequired == 0)
         {
+            camPostProcess.StartEffect();
+
             Instantiate(fxSlowmo, Vector3.zero, Quaternion.identity);
             timerSlowMo = 5.0f;
             startSlowMo = true;
@@ -96,6 +102,8 @@ public class GameManager : Singleton<GameManager>
         timerSlowMo -= Time.unscaledDeltaTime;
         if (timerSlowMo <= 0.0f)
         {
+            if (startSlowMo)
+                camPostProcess.StopEffect();
             startSlowMo = false;
             Time.timeScale = 1.0f;
             nbKillRequired = 20;
