@@ -47,3 +47,4 @@ MonoBehaviour:
   indexLevel: 0
   isLastLevel: 0
   endLevel: {fileID: 0}
+  spawnerEnemy: {fileID: 0}
