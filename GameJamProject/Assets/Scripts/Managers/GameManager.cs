@@ -48,8 +48,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-        if (OnUpdateScore != null)
-            OnUpdateScore(score);
+      
     }
 
     private void Update()
@@ -105,6 +104,12 @@ public class GameManager : Singleton<GameManager>
             Time.timeScale = 0.5f;
         }
     }
+    public void UpdateScoreStart()
+    {
+        if (OnUpdateScore != null)
+            OnUpdateScore(score);
+    }
+
 
     public void SlowMo()
     {
