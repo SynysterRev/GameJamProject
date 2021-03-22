@@ -49,7 +49,8 @@ public class PlayerController : MonoBehaviour
     private bool move = false;
     private Vector2[] posGrid = new Vector2[4];
     private Vector2 posBeforeMov = Vector2.zero;
-    private ShakeEffect shakeEffect = null;
+    private ShakeEffect shakeEffect = null; 
+    private PostProcess pp = null;
     private Number[] numbers = null;
     private Animator anim = null;
     private Coroutine fireCoroutine = null;
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
         poolManager = PoolManager.Instance;
         numbers = GameObject.FindObjectsOfType<Number>();
         shakeEffect = GameObject.FindObjectOfType<ShakeEffect>();
+        pp = Camera.main.GetComponent<PostProcess>();
         posGrid[0] = transform.position;
         life = maxLife;
         if (OnHit != null)
@@ -175,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
             SoundManager.Instance.PlaySoundClip(0);
             shakeEffect.StartEffect();
-
+            if(pp)pp.StartHitEffect();
             numberBullets--;
             if (OnFire != null)
                 OnFire(numberBullets, false);
@@ -277,7 +279,11 @@ public class PlayerController : MonoBehaviour
     {
         life = Mathf.Clamp(life - 1, 0, maxLife);
         if (OnHit != null)
+        {
             OnHit(life, maxLife);
+            shakeEffect.StartEffect();
+        }
+
         if (life == 0)
         {
             isDead = true;
