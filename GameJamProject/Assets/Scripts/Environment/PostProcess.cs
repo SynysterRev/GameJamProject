@@ -147,4 +147,10 @@ public class PostProcess : Singleton<PostProcess>
         yield return new WaitForSeconds(0.2f);
         isHit = false;
     }
+
+    public void ChangeColor(Color _color)
+    {
+        material.SetColor("_Color", _color);
+        material.SetColor("_ColorBck", _color - new Color(0.8f, 0.8f, 0.8f, 0.0f));
+    }
 }
