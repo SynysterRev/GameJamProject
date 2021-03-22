@@ -78,8 +78,6 @@ public class Enemy : MonoBehaviour
                     rb.velocity = Vector2.zero;
                     if (OnDeath != null)
                         OnDeath(this);
-
-                    GameObject.Instantiate(explosionPrefab, transform.GetChild(0).position, Quaternion.identity);
                     Destroy(gameObject);
                 }
                 else
@@ -96,6 +94,7 @@ public class Enemy : MonoBehaviour
             rb.velocity = Vector2.zero;
             if (OnDeath != null)
                 OnDeath(this);
+
             Destroy(gameObject);
         }
     }
@@ -104,5 +103,10 @@ public class Enemy : MonoBehaviour
     {
         rb.velocity = Vector2.zero;
         GetComponentInChildren<Animator>().SetTrigger("death");
+    }
+
+    private void OnDestroy()
+    {
+        GameObject.Instantiate(explosionPrefab, transform.GetChild(0).position, Quaternion.identity);
     }
 }

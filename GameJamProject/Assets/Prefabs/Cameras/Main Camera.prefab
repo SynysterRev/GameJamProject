@@ -45,7 +45,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.16078432, g: 0.011764707, b: 0.011764707, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -118,9 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 713f8235209daf3438543f3d992bd1e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenColor: {r: 0, g: 1, b: 0.0791831, a: 1}
-  bckColor: {r: 0, g: 0, b: 0, a: 1}
-  pattern: {fileID: 0}
+  dontDestroyOnLoad: 1
+  screenColor: {r: 0.8862745, g: 0.0627451, b: 0.21568628, a: 1}
+  bckColor: {r: 0.16078432, g: 0.011764706, b: 0.011764706, a: 1}
   EffectCam: {fileID: 8675157143138967539}
 --- !u!1001 &1749149358440157394
 PrefabInstance:
