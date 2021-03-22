@@ -91,7 +91,7 @@ Shader "Hidden/Retro Screen Effect"
                 float avg = max(0.0f,col.r-col.g-col.b);
                 // just invert the colors
                 col.rgb = lerp(col.rgb,_ColorBck,1.0-step(0.1,col.rgb));
-           //     col.rgb = lerp(col.rgb, patternCol*_Color,avg);
+                col.rgb = lerp(col.rgb, _Color,avg);
                 
                 return col;
             }
