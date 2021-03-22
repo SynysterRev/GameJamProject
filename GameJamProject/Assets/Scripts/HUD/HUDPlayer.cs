@@ -29,12 +29,21 @@ public class HUDPlayer : MonoBehaviour
         player.OnFire += UpdateBullet;
         player.OnReloading += UpdateBullet;
         player.OnHit += UpdateLife;
+        UpdateScore(0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        gm.OnUpdateScore -= UpdateScore;
+        player.OnFire -= UpdateBullet;
+        player.OnReloading -= UpdateBullet;
+        player.OnHit -= UpdateLife;
+    }
 
+    private void OnDestroy()
+    {
+        
     }
 
     private void UpdateBullet(int nbBullet, bool _reload)
@@ -69,10 +78,9 @@ public class HUDPlayer : MonoBehaviour
 
     }
 
-    private void UpdateScore(int scr)
+    private void UpdateScore(int newScore)
     {
-        Debug.Log("test");
-        this.score.text = "Score " + scr.ToString();
+        score.text = "Score\n" + newScore.ToString();
     }
 
     public void FireAnim()
