@@ -242,5 +242,60 @@ Shader "Hidden/Retro Screen Effect"
             }
             ENDCG
         }
+         //4
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+
+            #include "UnityCG.cginc"
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+            };
+
+            struct v2f
+            {
+                float2 uv : TEXCOORD0;
+                float4 vertex : SV_POSITION;
+                float4 screenPos : TEXCOORD1;
+            };
+
+            v2f vert (appdata v)
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.uv = v.uv;
+                o.screenPos = ComputeScreenPos(o.vertex);
+                return o;
+            }
+
+            float2 tile(float2 _st, float _zoom){
+                _st *= _zoom;
+                return frac(_st);
+            }
+
+            float box(float2 _st, float2 _size, float _smoothEdges){
+                _size = float2(0.5,0.5) -_size*0.5;
+                float2 aa = float2(_smoothEdges,_smoothEdges)*0.5;
+                float2 uv = smoothstep(_size,_size+aa,_st);
+                uv *= smoothstep(_size,_size+aa,float2(1.0,1.0)-_st);
+                return uv.x*uv.y;
+            }
+
+            sampler2D _MainTex;
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+    
+                fixed4 col = tex2D(_MainTex, i.uv);
+
+                return col*1.5f;
+            }
+            ENDCG
+        }
     }
 }

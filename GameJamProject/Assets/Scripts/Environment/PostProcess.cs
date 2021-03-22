@@ -18,6 +18,8 @@ public class PostProcess : Singleton<PostProcess>
     private float radius = 0.0f;
     private bool theWorldEffect = false;
     private bool transEffect = false;
+    private bool isHit = false;
+    private Coroutine coroutineWorld = null;
 
     private void Start()
     {
@@ -43,14 +45,20 @@ public class PostProcess : Singleton<PostProcess>
 
         if (theWorldEffect)
         {
-            Graphics.Blit(lastRt, rt0, material, 3);
-            lastRt = rt0;
+            Graphics.Blit(lastRt, (lastRt == rt0) ? rt1 : rt0, material, 3);
+            lastRt = (lastRt == rt0) ? rt1 : rt0;
         }
 
         if (transEffect)
         {
-            Graphics.Blit(lastRt, rt0, material, 4);
-            lastRt = rt0;
+            Graphics.Blit(lastRt, (lastRt == rt0) ? rt1 : rt0, material, 4);
+            lastRt = (lastRt == rt0) ? rt1 : rt0;
+        }
+
+        if (isHit)
+        {
+            Graphics.Blit(lastRt, (lastRt == rt0) ? rt1 : rt0, material, 5);
+            lastRt = (lastRt == rt0) ? rt1 : rt0;
         }
 
         Graphics.Blit(lastRt, dest, material, 0);
@@ -73,9 +81,16 @@ public class PostProcess : Singleton<PostProcess>
 
     public void StartTransitionEffect(UnityAction _action)
     {
-        StopAllCoroutines();
-        StartCoroutine(CoroutineEffectTrans(_action));
+        if (coroutineWorld != null)
+            StopCoroutine(coroutineWorld);
+        coroutineWorld = StartCoroutine(CoroutineEffectTrans(_action));
     }
+
+    public void StartHitEffect()
+    {
+        StartCoroutine(CoroutineHit());
+    }
+
     private IEnumerator CoroutineWorldEffect(float _finalValue)
     {
         do
@@ -124,5 +139,12 @@ public class PostProcess : Singleton<PostProcess>
 
         material.SetFloat("_Trans", 1.0f);
         transEffect = false;
+    }
+
+    private IEnumerator CoroutineHit()
+    {
+        isHit = true;
+        yield return new WaitForSeconds(0.2f);
+        isHit = false;
     }
 }

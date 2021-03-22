@@ -32,18 +32,12 @@ public class HUDPlayer : MonoBehaviour
         UpdateScore(0);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
         gm.OnUpdateScore -= UpdateScore;
         player.OnFire -= UpdateBullet;
         player.OnReloading -= UpdateBullet;
         player.OnHit -= UpdateLife;
-    }
-
-    private void OnDestroy()
-    {
-        
     }
 
     private void UpdateBullet(int nbBullet, bool _reload)
@@ -73,6 +67,10 @@ public class HUDPlayer : MonoBehaviour
             {
                 Animator anim = lifeGo.transform.GetChild(childID).GetComponentInChildren<Animator>();
                 anim.SetTrigger("hit");
+
+                PostProcess pp = Camera.main.GetComponent<PostProcess>();
+                if (pp)
+                    pp.StartHitEffect();
             }
         }
 
