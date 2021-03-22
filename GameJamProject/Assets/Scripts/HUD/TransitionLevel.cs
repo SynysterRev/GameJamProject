@@ -44,13 +44,28 @@ public class TransitionLevel : Singleton<TransitionLevel>
     public void StartTransition(int _sceneBuildIndex)
     {
         sceneBuildIndex = _sceneBuildIndex;
-        ChangeLevel();
+        PostProcess pp = Camera.main.GetComponent<PostProcess>();
+        if (pp)
+        {
+            pp.StartTransitionEffect(delegate
+            {
+                ChangeLevel();
+            });
+        }
+
     }
 
     public void StartTransition(string _sceneName)
     {
         sceneName = _sceneName;
-        ChangeLevel();
+        PostProcess pp = Camera.main.GetComponent<PostProcess>();
+        if (pp)
+        {
+            pp.StartTransitionEffect(delegate
+            {
+                ChangeLevel();
+            });
+        }
     }
 
     public void ChangeLevel()

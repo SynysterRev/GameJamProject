@@ -65,7 +65,7 @@ public class GameManager : Singleton<GameManager>
                 camPostProcess = GameObject.FindObjectOfType<PostProcess>();
 
             if (camPostProcess)
-                camPostProcess.StartEffect();
+                camPostProcess.StartWorldEffect();
 
             timerSlowMo = 5.0f;
             startSlowMo = true;
@@ -97,7 +97,7 @@ public class GameManager : Singleton<GameManager>
                 camPostProcess = GameObject.FindObjectOfType<PostProcess>();
 
             if (camPostProcess)
-                camPostProcess.StartEffect();
+                camPostProcess.StartWorldEffect();
 
             Instantiate(fxSlowmo, Vector3.zero, Quaternion.identity);
             timerSlowMo = 5.0f;
@@ -114,7 +114,7 @@ public class GameManager : Singleton<GameManager>
             if (startSlowMo)
             {
                 if (camPostProcess)
-                    camPostProcess.StopEffect();
+                    camPostProcess.StopWorldEffect();
             }
 
             startSlowMo = false;
@@ -128,11 +128,11 @@ public class GameManager : Singleton<GameManager>
         if (LevelManager.Instance.IsLastLevel)
         {
             //go menu
-            SceneManager.LoadScene("Menu");
+            TransitionLevel.Instance.StartTransition("Menu");
         }
         else
         {
-            SceneManager.LoadScene("Level" + (LevelManager.Instance.IndexLevel + 1));
+            TransitionLevel.Instance.StartTransition("Level" + (LevelManager.Instance.IndexLevel + 1));
         }
     }
 
@@ -143,7 +143,7 @@ public class GameManager : Singleton<GameManager>
             RegisterNewScore(pseudo);
         }
         score = 0;
-        SceneManager.LoadScene("Level0");
+        TransitionLevel.Instance.StartTransition("Level0");
     }
 
     public void GoMenu(string pseudo = "")
@@ -153,12 +153,14 @@ public class GameManager : Singleton<GameManager>
             RegisterNewScore(pseudo);
         }
         score = 0;
-        SceneManager.LoadScene("Menu");
+        Debug.Log("dsfsdf");
+        TransitionLevel.Instance.StartTransition("Menu");
     }
 
     public void GoMenu()
     {
-        SceneManager.LoadScene("Menu");
+           Debug.Log("dsfsdf");
+        TransitionLevel.Instance.StartTransition("Menu");
     }
     public bool IsNewHighscore()
     {
