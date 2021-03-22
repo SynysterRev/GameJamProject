@@ -153,13 +153,11 @@ public class GameManager : Singleton<GameManager>
             RegisterNewScore(pseudo);
         }
         score = 0;
-        Debug.Log("dsfsdf");
         TransitionLevel.Instance.StartTransition("Menu");
     }
 
     public void GoMenu()
     {
-        Debug.Log("dsfsdf");
         TransitionLevel.Instance.StartTransition("Menu");
     }
     public bool IsNewHighscore()
