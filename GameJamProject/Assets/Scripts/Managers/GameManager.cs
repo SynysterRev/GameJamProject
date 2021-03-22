@@ -48,7 +48,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-      
+
     }
 
     private void Update()
@@ -147,6 +147,7 @@ public class GameManager : Singleton<GameManager>
         {
             RegisterNewScore(pseudo);
         }
+        nbKillRequired = 20;
         score = 0;
         TransitionLevel.Instance.StartTransition(SceneManager.GetActiveScene().name);
     }
