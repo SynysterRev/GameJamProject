@@ -1,61 +1,128 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Util;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class PostProcess : MonoBehaviour
+public class PostProcess : Singleton<PostProcess>
 {
     [SerializeField]
     private Color screenColor = Color.white;
     [SerializeField]
     private Color bckColor = Color.black;
-    [SerializeField]
-    private Texture pattern = null;
+    /*  [SerializeField]
+      private Texture pattern = null;*/
     [SerializeField]
     private Camera EffectCam = null;
     private Material material;
     private float radius = 0.0f;
+    private bool theWorldEffect = false;
+    private bool transEffect = false;
+
     private void Start()
     {
         Shader shader = Resources.Load<Shader>("Shaders/Post Process Effects");
         material = new Material(shader);
         material.SetColor("_Color", screenColor);
         material.SetColor("_ColorBck", bckColor);
-        material.SetTexture("_Pattern", pattern);
+        //     material.SetTexture("_Pattern", pattern);
     }
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
         RenderTexture rt0 = RenderTexture.GetTemporary(src.width, src.height);
         RenderTexture rt1 = RenderTexture.GetTemporary(src.width, src.height);
-
+        RenderTexture lastRt = rt0;
         material.SetTexture("_Distortion", EffectCam.targetTexture);
 
-        Graphics.Blit(src, rt0, material, 1);
-        Graphics.Blit(rt0, rt1, material, 2);
-        Graphics.Blit(rt1, rt0, material, 3);
-        Graphics.Blit(rt0, dest, material, 0);
+        Graphics.Blit(src, lastRt, material, 1);
+        lastRt = rt0;
+
+        Graphics.Blit(lastRt, rt1, material, 2);
+        lastRt = rt1;
+
+        if (theWorldEffect)
+        {
+            Graphics.Blit(lastRt, rt0, material, 3);
+            lastRt = rt0;
+        }
+
+        if (transEffect)
+        {
+            Graphics.Blit(lastRt, rt0, material, 4);
+            lastRt = rt0;
+        }
+
+        Graphics.Blit(lastRt, dest, material, 0);
 
         RenderTexture.ReleaseTemporary(rt0);
         RenderTexture.ReleaseTemporary(rt1);
     }
 
-    public void StartEffect()
+    public void StartWorldEffect()
     {
-        StartCoroutine(CoroutineEffect(1.0f));
+        StopAllCoroutines();
+        StartCoroutine(CoroutineWorldEffect(1.0f));
     }
 
-    public void StopEffect()
+    public void StopWorldEffect()
     {
-        StartCoroutine(CoroutineEffect(0.0f));
+        StopAllCoroutines();
+        StartCoroutine(CoroutineWorldEffect(0.0f));
     }
-    private IEnumerator CoroutineEffect(float _finalValue)
+
+    public void StartTransitionEffect(UnityAction _action)
+    {
+        StopAllCoroutines();
+        StartCoroutine(CoroutineEffectTrans(_action));
+    }
+    private IEnumerator CoroutineWorldEffect(float _finalValue)
     {
         do
         {
+            theWorldEffect = true;
             radius = Mathf.Lerp(radius, _finalValue, 0.01f);
             material.SetFloat("_Radius", radius);
             yield return null;
-          
+
         } while (Mathf.Abs(_finalValue - radius) > 0.01f);
+
+        if (_finalValue < 0.5f)
+        {
+            theWorldEffect = false;
+        }
+    }
+
+    private IEnumerator CoroutineEffectTrans(UnityAction _action)
+    {
+        float trans = 1.0f;
+        material.SetFloat("_Trans", trans);
+        transEffect = true;
+
+        do
+        {
+            trans = Mathf.Lerp(trans, 0.0f, 0.05f);
+            material.SetFloat("_Trans", trans);
+            yield return null;
+
+        } while (trans > 0.01f);
+        material.SetFloat("_Trans", 0.0f);
+
+        if (_action != null)
+        {
+            _action.Invoke();
+        }
+        yield return new WaitForSeconds(0.2f);
+
+        do
+        {
+            trans = Mathf.Lerp(trans, 1.0f, 0.05f);
+            material.SetFloat("_Trans", trans);
+            yield return null;
+
+        } while (Mathf.Abs(1.0f - trans) > 0.1f);
+
+        material.SetFloat("_Trans", 1.0f);
+        transEffect = false;
     }
 }

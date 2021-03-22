@@ -35,22 +35,17 @@ public class MenuHUD : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     private void Play()
     {
-        SceneManager.LoadScene("Level0");
+        TransitionLevel.Instance.StartTransition("Level0");
     }
     private void Survival()
     {
-        SceneManager.LoadScene("Survival");
+        TransitionLevel.Instance.StartTransition("Survival");
     }
     private void Credits()
     {
-        SceneManager.LoadScene("Credits");
+        TransitionLevel.Instance.StartTransition("Credits");
     }
     private void Quit()
     {
