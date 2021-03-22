@@ -48,7 +48,6 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-        camPostProcess = GameObject.FindObjectOfType<PostProcess>();
         if (OnUpdateScore != null)
             OnUpdateScore(score);
     }
@@ -62,7 +61,11 @@ public class GameManager : Singleton<GameManager>
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            camPostProcess.StartEffect();
+            if (!camPostProcess)
+                camPostProcess = GameObject.FindObjectOfType<PostProcess>();
+
+            if (camPostProcess)
+                camPostProcess.StartEffect();
 
             timerSlowMo = 5.0f;
             startSlowMo = true;
@@ -90,7 +93,11 @@ public class GameManager : Singleton<GameManager>
         nbKillRequired--;
         if (nbKillRequired == 0)
         {
-            camPostProcess.StartEffect();
+            if (!camPostProcess)
+                camPostProcess = GameObject.FindObjectOfType<PostProcess>();
+
+            if (camPostProcess)
+                camPostProcess.StartEffect();
 
             Instantiate(fxSlowmo, Vector3.zero, Quaternion.identity);
             timerSlowMo = 5.0f;
@@ -105,7 +112,11 @@ public class GameManager : Singleton<GameManager>
         if (timerSlowMo <= 0.0f)
         {
             if (startSlowMo)
-                camPostProcess.StopEffect();
+            {
+                if (camPostProcess)
+                    camPostProcess.StopEffect();
+            }
+
             startSlowMo = false;
             Time.timeScale = 1.0f;
             nbKillRequired = 20;
